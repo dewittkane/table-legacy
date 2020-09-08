@@ -18,8 +18,9 @@ import UserPage from '../Pages/HomePage/HomePage';
 import InfoPage from '../Pages/InfoPage/InfoPage';
 import LandingPage from '../Pages/LandingPage/LandingPage';
 import LoginPage from '../Pages/LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
-import LiveSearch from '../LiveSearch/LiveSearch'
+import RegisterPage from '../Pages/RegisterPage/RegisterPage';
+import LiveSearch from '../LiveSearch/LiveSearch';
+import LogAGamePage from '../Pages/LogAGamePage/LogAGamePage';
 
 import './App.css';
 
@@ -93,12 +94,15 @@ class App extends Component {
               component={LandingPage}
               authRedirect="/user"
             />
-
-
             <Route
               exact
               path="/search"
               component={LiveSearch}
+            />
+            <ProtectedRoute
+              exact
+              path="/loggame"
+              component={LogAGamePage}
             />
 
 
