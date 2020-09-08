@@ -2,20 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
 import { Button, Input, TextField } from '@material-ui/core';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
 
 
 class LogAGamePage extends Component {
   state = {
     heading: 'Log a Game',
-    startDate: new Date(),
+    selectedDate: new Date(),
     note: ''
   };
 
   handleChangeFor = (propName) => (event) => {
     this.setState({
       [propName]: event.target.value
+    })
+  }
+
+  handleDateChange = (date) => {
+    this.setState({
+      selectedDate: date
     })
   }
 
@@ -38,10 +46,15 @@ class LogAGamePage extends Component {
           variant='filled'
           label='Notes?'
         />
-        <DatePicker 
-          selected={this.state.startDate}
-          onChange={this.handleChangeFor('startDate')}
-        />
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <DatePicker 
+            disableToolbar
+            value={this.state.selectedDate}
+            onChange={(event) => this.handleDateChange(event)}
+            label='Date Played'
+            format='dddd, L'
+          />
+        </MuiPickersUtilsProvider>
         {JSON.stringify(this.state)}
       </div>
     );
