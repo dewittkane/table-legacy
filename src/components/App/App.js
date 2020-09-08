@@ -13,12 +13,13 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
+import AboutPage from '../Pages/AboutPage/AboutPage';
+import UserPage from '../Pages/HomePage/HomePage';
+import InfoPage from '../Pages/InfoPage/InfoPage';
+import LandingPage from '../Pages/LandingPage/LandingPage';
+import LoginPage from '../Pages/LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import LiveSearch from '../LiveSearch/LiveSearch'
 
 import './App.css';
 
@@ -92,6 +93,14 @@ class App extends Component {
               component={LandingPage}
               authRedirect="/user"
             />
+
+
+            <Route
+              exact
+              path="/search"
+              component={LiveSearch}
+            />
+
 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
