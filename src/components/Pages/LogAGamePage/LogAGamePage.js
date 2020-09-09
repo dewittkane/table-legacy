@@ -4,6 +4,7 @@ import mapStoreToProps from '../../../redux/mapStoreToProps';
 import { Button, Input, TextField } from '@material-ui/core';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
+import PlayerTable from '../../PlayerTable/PlayerTable';
 // import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 
@@ -43,7 +44,7 @@ class LogAGamePage extends Component {
           value={this.state.note}
           onChange={this.handleChangeFor('note')}
           rows={4}
-          variant='filled'
+          variant='outlined'
           label='Notes?'
         />
         <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -55,6 +56,7 @@ class LogAGamePage extends Component {
             format='dddd, L'
           />
         </MuiPickersUtilsProvider>
+        <PlayerTable />
         {JSON.stringify(this.state)}
       </div>
     );
