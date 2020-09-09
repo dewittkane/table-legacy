@@ -1,16 +1,15 @@
-let startingPlayer = {
-    username: "dewitt",
-    players_name: '',
-    score: '',
-    is_winner: false
-  }
-
-const playersTableReducer = (state = [startingPlayer], action) => {
+const playersTableReducer = (state = [], action) => {
     switch (action.type) {
       case 'ADD_PLAYER':
         return [...state, action.payload];
-      case 'EDIT_PLAYER':
-        return [...state, action.payload]
+      case 'TOGGLE_WIN':
+        return state.map((player, i) => (
+            i === action.payload ? {...player, is_winner: !player.is_winner} : player
+        ))
+      case 'EDIT_SCORE':
+        return state.map((player, i) => (
+            i === action.payload.index ? {...player, score: action.payload.score } : player
+        ))
       default:
         return state;
     }

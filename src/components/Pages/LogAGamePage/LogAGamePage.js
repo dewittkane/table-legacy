@@ -10,39 +10,36 @@ import PlayerTable from '../../PlayerTable/PlayerTable';
 
 
 class LogAGamePage extends Component {
-  state = {
-    heading: 'Log a Game',
-    selectedDate: new Date(),
-    note: ''
-  };
 
-  handleChangeFor = (propName) => (event) => {
-    this.setState({
-      [propName]: event.target.value
-    })
+
+  logGame = () => {
+    let gameInfo = this.props.store.gameInstance;
+    let players = this.props.store.gameInstance;
+    if( !gameInfo.game ) {
+      alert('Please select a game!');
+    } else if ( !gameInfo.date ) {
+      alert('Please select a date!');
+    } else if ( !players ) {
+      alert('Please add some players to the game!')
+    } else {
+      let gameInstance = {...gameInfo, players}
+      this.props.dispatch({type: 'LOG_GAME', payload: gameInstance})
+    }
   }
-
-  handleDateChange = (date) => {
-    this.setState({
-      selectedDate: date
-    })
-  }
-
   render() {
     return (
       <div>
-        <h2>{this.state.heading}</h2>
-        {this.props.store.game && <img src={this.props.store.game.images.small} alt={this.props.store.game.name}/>}
-        {/* {JSON.stringify(this.props.store)} */}
+        <h2>Log a Game</h2>
+        {this.props.store.gameInstance && <img src={this.props.store.gameInstance.game.images.small} alt={this.props.store.gameInstance.game.name}/>}
         <TextField
-          value={this.props.store.game.name}
+          value={this.props.store.gameInstance.game.name}
           variant='filled'
           label='Game?'
         />
         <TextField 
           multiline
-          value={this.state.note}
-          onChange={this.handleChangeFor('note')}
+          value={this.props.store.gameInstance.note}
+          onChange={(event) => this.props.dispatch({type: 'SET_NOTE', payload: event.target.value})}
           rows={4}
           variant='filled'
           label='Notes?'
@@ -50,14 +47,14 @@ class LogAGamePage extends Component {
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <DatePicker 
             disableToolbar
-            value={this.state.selectedDate}
-            onChange={(event) => this.handleDateChange(event)}
+            value={this.props.store.gameInstance.date}
+            // onChange={(event) => this.handleDateChange(event)}
+            onChange={(date) => this.props.dispatch({type: 'SET_DATE', payload: date})}
             label='Date Played'
             format='dddd, L'
           />
         </MuiPickersUtilsProvider>
         <PlayerTable />
-        {JSON.stringify(this.state)}
         <Button 
           variant='contained'
           onClick={this.logGame}>Log your Legacy</Button>

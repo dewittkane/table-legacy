@@ -23,6 +23,9 @@ class PlayerTable extends Component {
       })
   }
 
+  componentDidMount(){
+      this.props.dispatch({ type: 'ADD_PLAYER', payload: { username: this.props.store.user.username, is_winner: false, score: 0 }})
+  }
 
 
   render() {
@@ -41,7 +44,7 @@ class PlayerTable extends Component {
                 </TableHead>
                 <TableBody>
                     {this.props.store.playersTable.map((player, i) => (
-                        <PlayerRow key={i} player={player}/>
+                        <PlayerRow key={i} index={i} player={player}/>
                     ))}
                     <TableRow>
                         <TableCell colSpan={4} align="right">
