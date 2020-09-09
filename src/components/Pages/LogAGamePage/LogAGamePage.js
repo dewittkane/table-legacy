@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
-import { Button, Input, TextField } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import PlayerTable from '../../PlayerTable/PlayerTable';
@@ -44,7 +44,7 @@ class LogAGamePage extends Component {
           value={this.state.note}
           onChange={this.handleChangeFor('note')}
           rows={4}
-          variant='outlined'
+          variant='filled'
           label='Notes?'
         />
         <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -58,6 +58,9 @@ class LogAGamePage extends Component {
         </MuiPickersUtilsProvider>
         <PlayerTable />
         {JSON.stringify(this.state)}
+        <Button 
+          variant='contained'
+          onClick={this.logGame}>Log your Legacy</Button>
       </div>
     );
   }

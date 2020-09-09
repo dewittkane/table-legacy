@@ -2,18 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import AddAPlayerModal from '../AddAPlayerModal/AddAPlayerModal';
+import PlayerRow from '../PlayerRow/PlayerRow';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 
 // Basic class component structure for React with default state
 // value setup. When making a new component be sure to replace
 // the component name PlayerTable with the name for the new
 // component.
-const rows = [{
-    delete: "delete",
-    user: "dewitt",
-    score: 10,
-    is_winner: "no"
-  }]
+
 
 class PlayerTable extends Component {
   state = {
@@ -44,20 +40,15 @@ class PlayerTable extends Component {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.user}>
-                            <TableCell component="th" scope="row">
-                                {row.delete}
-                            </TableCell>
-                            <TableCell align="right">{row.user}</TableCell>
-                            <TableCell align="right">{row.score}</TableCell>
-                            <TableCell align="right">{row.is_winner}</TableCell>
-                        </TableRow>
+                    {this.props.store.playersTable.map((player, i) => (
+                        <PlayerRow key={i} player={player}/>
                     ))}
                     <TableRow>
                         <TableCell colSpan={4} align="right">
-                            <Button onClick={this.togglePlayerMode}>+ Add a Player</Button>
-                            {JSON.stringify(this.state.addPlayerMode)}
+                            <Button 
+                                variant='contained'
+                                onClick={this.togglePlayerMode}>+ Add a Player
+                            </Button>
                         </TableCell>
                     </TableRow>
                 </TableBody>
