@@ -16,10 +16,27 @@ function* logGame(action){
       }
 }
 
-function* getGamesByUser(action){
+function* getTheirGames(action){
     try {
         let response = yield axios
-            .get(`/api/games/myGamesAgainst/3`)
+            .get(`/api/games/myGamesAgainst/${action.payload}`)
+            .catch(error => {
+                    console.log(error);
+            })
+        console.log(response.data);
+
+        yield put({ type: 'SET_GAMES', payload: response.data })
+
+
+    } catch (error) {
+        console.log('Error with getting their games:', error);
+      }
+}
+
+function* getYourGames(action){
+    try {
+        let response = yield axios
+            .get(`/api/games/myGames`)
             .catch(error => {
                     console.log(error);
             })
@@ -28,13 +45,14 @@ function* getGamesByUser(action){
 
 
     } catch (error) {
-        console.log('Error with get games:', error);
+        console.log('Error with getting your games:', error);
       }
 }
 
 function* logSaga() {
     yield takeLatest('LOG_GAME', logGame);
-    yield takeLatest('GET_GAMES', getGamesByUser);
+    yield takeLatest('GET_THEIR_GAMES', getTheirGames);
+    yield takeLatest('GET_YOUR_GAMES', getYourGames)
   }
   
   export default logSaga;
