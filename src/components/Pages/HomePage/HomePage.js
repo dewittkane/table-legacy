@@ -3,19 +3,23 @@ import { connect } from 'react-redux';
 import LogOutButton from '../../LogOutButton/LogOutButton';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom'
+import GameInstanceCard from '../../GameInstanceCard/GameInstanceCard';
 
 class UserPage extends Component {
 
   componentDidMount = () => {
+    //REMOVE USER ID HERE
     this.props.dispatch({type: 'GET_GAMES', payload: this.props.store.user.id})
   }
-  
+
   render() {
     return (
       <div>
         <h1 id="welcome">Welcome, {this.props.store.user.username}!</h1>
         <p>Your ID is: {this.props.store.user.id}</p>
-        {/* {this.props.store.} */}
+        {this.props.store.games.map(game => (
+          <GameInstanceCard key={game.id} game={game} />
+        ))}
         <button onClick={() => this.props.history.push('/loggame') }>Log a Game!</button>
         <LogOutButton className="log-in" />
       </div>

@@ -1,5 +1,5 @@
 
-import { takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 
@@ -19,11 +19,11 @@ function* logGame(action){
 function* getGamesByUser(action){
     try {
         let response = yield axios
-            .get(`/api/games/user/${action.payload}`)
+            .get(`/api/games/myGamesAgainst/3`)
             .catch(error => {
                     console.log(error);
             })
-
+        console.log(response.data);
         yield put({ type: 'SET_GAMES', payload: response.data })
 
 
@@ -34,7 +34,7 @@ function* getGamesByUser(action){
 
 function* logSaga() {
     yield takeLatest('LOG_GAME', logGame);
-    yield takeLatest('GET_GAMES_BY_USER', getGamesByUser);
+    yield takeLatest('GET_GAMES', getGamesByUser);
   }
   
   export default logSaga;

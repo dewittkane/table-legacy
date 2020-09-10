@@ -49,7 +49,8 @@ class AddAPlayerModal extends Component {
                 <h2>{this.state.heading}</h2>
                 <h3>Search for your friend if they have an account:</h3>
                 <TextField
-                    value={this.state.username} 
+                    onChange={this.handleChangeFor('userId')}
+                    value={this.state.userId} 
                     variant='outlined'
                 />
                 <h3>Or type in their name if they aren't part of the Table Legacy community:</h3>
