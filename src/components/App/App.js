@@ -21,6 +21,7 @@ import LoginPage from '../Pages/LoginPage/LoginPage';
 import RegisterPage from '../Pages/RegisterPage/RegisterPage';
 import LiveSearch from '../LiveSearch/LiveSearch';
 import LogAGamePage from '../Pages/LogAGamePage/LogAGamePage';
+import GameInstancePage from '../Pages/GameInstancePage/GameInstancePage';
 
 import './App.css';
 
@@ -103,6 +104,12 @@ class App extends Component {
               exact
               path="/loggame"
               component={LogAGamePage}
+            />
+
+            <ProtectedRoute 
+              exact
+              path="/gameDetails/:gameInstanceId"
+              component={GameInstancePage}
             />
 
 

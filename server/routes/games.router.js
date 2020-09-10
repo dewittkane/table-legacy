@@ -114,7 +114,34 @@ router.get('/myGamesAgainst/:id', async (req, res) => {
     }
   });
 
+  router.get('/gameInstance/:gameInstanceId', (req, res) => {
+    const queryText = `SELECT * FROM "game" 
+    FULL JOIN "game_instance" ON game.id = game_instance.game_id
+    FULL JOIN "players" ON game_instance.id = players.game_instance_id
+    FULL JOIN "user" ON players.users_id = "user".id
+    WHERE "game_instance".id = $1`
 
+    pool.query(queryText, [req.params.gameInstanceId])
+        .then(result => {
+            console.log(result.rows)
+            const gameInstance = result.rows[0];
+            const players = [];
+            result.rows.map(user => {
+                players.push({
+                    users_id: user.users_id,
+                    username: user.username,
+                    players_name: user.players_name,
+                    score: user.score,
+                    is_winner: user.is_winner
+                })
+            })
+            const game = {gameInstance, players}
+            res.send(game)
+        }).catch(error => {
+            console.log('Error getting game instance:', error);
+            res.sendStatus(500);
+        })
+  });
 
 router.post('/', async (req, res) => {
     //Calling sql and not hanging up

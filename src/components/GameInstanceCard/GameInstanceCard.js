@@ -19,7 +19,7 @@ class GameInstanceCard extends Component {
           </ul>
           <Button 
             variant="contained"
-            onClick={() => this.props.history.push(`/game/${this.props.game.gameInstance.game_instance_id}`)}
+            onClick={() => this.props.history.push(`/gameDetails/${this.props.game.gameInstance.game_instance_id}`)}
             >Legacy Log
           </Button>
       </Card>
