@@ -21,11 +21,17 @@ class PlayerTable extends Component {
       this.setState({
           addPlayerMode: !this.state.addPlayerMode
       })
-  }
+  };
 
   componentDidMount(){
-      this.props.dispatch({ type: 'ADD_PLAYER', payload: { userId: this.props.store.user.id, username: this.props.store.user.username, is_winner: false, score: 0 }})
-  }
+      this.props.dispatch({ 
+        type: 'ADD_PLAYER', 
+        payload:
+            { userId: this.props.store.user.id, 
+            username: this.props.store.user.username, 
+            is_winner: false, 
+            score: 0 }})
+  };
 
 
   render() {

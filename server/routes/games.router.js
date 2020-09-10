@@ -2,11 +2,11 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-/**
- * GET route template
- */
-router.get('/', (req, res) => {
-  // GET route code here
+router.get('/user/:id', (req, res) => {
+  const users_id = req.user.id
+  const requested_id = req.params.id
+  const queryText = `SELECT * FROM "game"
+    JOIN "game_instance" WHERE "game`
 });
 
 router.post('/', async (req, res) => {
