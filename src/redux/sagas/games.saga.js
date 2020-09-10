@@ -49,10 +49,23 @@ function* getYourGames(action){
       }
 }
 
+function* deleteGame(action){
+    try {
+        yield axios
+            .delete(`/api/games/${action.payload}`)
+            .catch(error => {
+                    console.log('error deleting game', error);
+            })
+
+    } catch (error) {
+        console.log('Error with deleting game:', error);
+      }
+}
 function* logSaga() {
     yield takeLatest('LOG_GAME', logGame);
     yield takeLatest('GET_THEIR_GAMES', getTheirGames);
-    yield takeLatest('GET_YOUR_GAMES', getYourGames)
+    yield takeLatest('GET_YOUR_GAMES', getYourGames);
+    yield takeLatest('DELETE_GAME', deleteGame);
   }
   
   export default logSaga;

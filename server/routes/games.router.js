@@ -114,7 +114,7 @@ router.get('/myGamesAgainst/:id', async (req, res) => {
     }
   });
 
-  router.get('/gameInstance/:gameInstanceId', (req, res) => {
+router.get('/gameInstance/:gameInstanceId', (req, res) => {
     const queryText = `SELECT * FROM "game" 
     FULL JOIN "game_instance" ON game.id = game_instance.game_id
     FULL JOIN "players" ON game_instance.id = players.game_instance_id
@@ -202,5 +202,16 @@ router.post('/', async (req, res) => {
         client.release()
     }
 });
+
+router.delete('/:gameInstanceId', (req, res) => {
+    const queryText = `DELETE FROM "game_instance" WHERE id = $1`
+    pool.query(queryText, [req.params.gameInstanceId])
+        .then(response => {
+            res.sendStatus(200)
+        }).catch(error => {
+            console.log('error deleting game:', error);
+            res.sendStatus(500)            
+        })
+})
 
 module.exports = router;
