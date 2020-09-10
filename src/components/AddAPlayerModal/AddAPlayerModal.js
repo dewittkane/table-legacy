@@ -5,6 +5,7 @@ import { Button, Checkbox, Modal, Paper, TextField } from '@material-ui/core';
 
 class AddAPlayerModal extends Component {
   state = {
+    userId: '',
     username: '',
     players_name: '',
     score: '',

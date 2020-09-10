@@ -14,7 +14,7 @@ class LogAGamePage extends Component {
 
   logGame = () => {
     let gameInfo = this.props.store.gameInstance;
-    let players = this.props.store.gameInstance;
+    let players = this.props.store.playersTable;
     if( !gameInfo.game ) {
       alert('Please select a game!');
     } else if ( !gameInfo.date ) {
@@ -22,6 +22,7 @@ class LogAGamePage extends Component {
     } else if ( !players ) {
       alert('Please add some players to the game!')
     } else {
+      //MAYBE I WANT TO ADD A CONFIRMATION MODAL?!
       let gameInstance = {...gameInfo, players}
       this.props.dispatch({type: 'LOG_GAME', payload: gameInstance})
     }

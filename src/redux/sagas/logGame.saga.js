@@ -1,5 +1,5 @@
 
-import { put, takeLatest } from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 
@@ -11,16 +11,13 @@ function* logGame(action){
                     console.log('error posting game', error);
             })
 
-        yield put({ type: 'SET_SEARCH', payload: response.data.games })
-
-
     } catch (error) {
-        console.log('Error with search:', error);
+        console.log('Error with logging game:', error);
       }
 }
 
-function* searchSaga() {
+function* logSaga() {
     yield takeLatest('LOG_GAME', logGame);
   }
   
-  export default searchSaga;
+  export default logSaga;
