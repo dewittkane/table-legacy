@@ -16,6 +16,21 @@ class GameInstancePage extends Component {
         this.props.dispatch({type: 'GET_GAME_INSTANCE', payload: this.props.match.params.gameInstanceId})
     }
 
+    turnToEditMode = () => {
+        this.props.dispatch({type: 'SET_GAME_TO_EDIT', payload: this.props.store.gameInstance.gameInstance})
+        this.setState({
+            isEditMode: true
+        })
+    }
+
+    submitEdits = () => {
+        let gameInfo = this.props.store.logAGame;
+        let players = this.props.store.playersTable;
+        console.log('Submitting edits!');
+        let editedGame = {...gameInfo, players}
+        this.props.dispatch({type: 'EDIT_GAME', payload: editedGame })
+    }
+    
   render() {
     return (
         <>
@@ -30,7 +45,7 @@ class GameInstancePage extends Component {
                 <MuiPickersUtilsProvider utils={MomentUtils}>
                     <DatePicker 
                         disableToolbar
-                        value={this.props.store.gameInstance.gameInstance.date_played}
+                        value={this.props.store.logAGame.date_played}
                         onChange={(date) => this.props.dispatch({type: 'SET_DATE', payload: date})}
                         label='Date Played'
                         format='dddd, L'
@@ -38,7 +53,7 @@ class GameInstancePage extends Component {
                 </MuiPickersUtilsProvider>
                 <TextField 
                     multiline
-                    value={this.props.store.gameInstance.gameInstance.creator_notes}
+                    value={this.props.store.logAGame.creator_notes || ''}
                     onChange={(event) => this.props.dispatch({type: 'SET_NOTE', payload: event.target.value})}
                     rows={4}
                     variant='filled'
@@ -47,6 +62,7 @@ class GameInstancePage extends Component {
                 <PlayerTable gameInstanceTable={true} isEditMode={this.state.isEditMode}/>
                     <h3>Game Creator Options:</h3>
                     <Button
+                        onClick={this.submitEdits}
                         variant="contained"
                         >Submit Changes
                     </Button>
@@ -66,14 +82,13 @@ class GameInstancePage extends Component {
         :
             <div>
                 <h3>{moment(this.props.store.gameInstance.gameInstance.date_played).format("MMM D, YYYY")}</h3>
-                
                 <Typography>{this.props.store.gameInstance.gameInstance.creator_notes}</Typography>
                 <PlayerTable gameInstanceTable={true} isEditMode={this.state.isEditMode}/>
                 {this.props.store.gameInstance.gameInstance.creator_id === this.props.store.user.id && 
                     <div>
                     <h3>Game Creator Options:</h3> 
                     <Button
-                        onClick={() => this.setState({isEditMode: !this.state.isEditMode})}
+                        onClick={() => this.turnToEditMode()}
                         variant="contained"
                         >Edit Game
                     </Button>

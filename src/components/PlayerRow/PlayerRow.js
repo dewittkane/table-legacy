@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { Checkbox, TableRow, TableCell, TextField, Typography } from '@material-ui/core';
-import { Check, Close } from '@material-ui/icons'
+import { Check, Close, Delete } from '@material-ui/icons'
 
 // Basic class component structure for React with default state
 // value setup. When making a new component be sure to replace
@@ -39,14 +39,16 @@ class PlayerRow extends Component {
     this.props.dispatch({ type: 'EDIT_SCORE', payload: { index: this.props.index, score: this.state.score } });
     this.toggleEditScoreMode();
   }
-
+  removePlayer = () => {
+    this.props.dispatch({ type: 'REMOVE_PLAYER', payload: this.props.index})
+  }
   render() {
     return (
       <>
         {this.props.isEditMode ?
           <TableRow>
             <TableCell>
-              <img src="./images/trashIcon.svg" alt="trash icon"></img>
+              <Delete onClick={this.removePlayer}/>
             </TableCell>
             <TableCell>{this.props.player.username || this.props.player.players_name}</TableCell>
             <TableCell>

@@ -31,15 +31,15 @@ class LogAGamePage extends Component {
     return (
       <div>
         <h2>Log a Game</h2>
-        {this.props.store.logAGame && <img src={this.props.store.logAGame.game.images.small} alt={this.props.store.logAGame.game.name}/>}
+        {this.props.store.logAGame && <img src={this.props.store.logAGame.image_url} alt={this.props.store.logAGame.name}/>}
         <TextField
-          value={this.props.store.logAGame.game.name}
+          value={this.props.store.logAGame.name}
           variant='filled'
           label='Game?'
         />
         <TextField 
           multiline
-          value={this.props.store.logAGame.note}
+          value={this.props.store.logAGame.creator_notes}
           onChange={(event) => this.props.dispatch({type: 'SET_NOTE', payload: event.target.value})}
           rows={4}
           variant='filled'
@@ -48,13 +48,13 @@ class LogAGamePage extends Component {
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <DatePicker 
             disableToolbar
-            value={this.props.store.logAGame.date}
+            value={this.props.store.logAGame.date_played}
             onChange={(date) => this.props.dispatch({type: 'SET_DATE', payload: date})}
             label='Date Played'
             format='dddd, L'
           />
         </MuiPickersUtilsProvider>
-        <PlayerTable editMode={true}/>
+        <PlayerTable isEditMode={true}/>
         <Button 
           variant='contained'
           onClick={this.logGame}>Log your Legacy</Button>

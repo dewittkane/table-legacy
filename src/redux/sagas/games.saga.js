@@ -61,11 +61,27 @@ function* deleteGame(action){
         console.log('Error with deleting game:', error);
       }
 }
+
+function* editGame(action){
+    try {
+        yield axios
+            .put(`/api/games/`, action.payload)
+            .catch(error => {
+                    console.log('error editing game', error);
+            })
+
+    } catch (error) {
+        console.log('Error with editing game:', error);
+      }
+}
+
+
 function* logSaga() {
     yield takeLatest('LOG_GAME', logGame);
     yield takeLatest('GET_THEIR_GAMES', getTheirGames);
     yield takeLatest('GET_YOUR_GAMES', getYourGames);
     yield takeLatest('DELETE_GAME', deleteGame);
+    yield takeLatest('EDIT_GAME', editGame);
   }
   
   export default logSaga;

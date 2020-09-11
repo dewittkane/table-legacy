@@ -4,6 +4,10 @@ const playersTableReducer = (state = [], action) => {
         return action.payload
       case 'ADD_PLAYER':
         return [...state, action.payload];
+      case 'REMOVE_PLAYER':
+        let newState = [...state];
+        newState.splice(action.payload, 1)
+        return newState;
       case 'TOGGLE_WIN':
         return state.map((player, i) => (
             i === action.payload ? {...player, is_winner: !player.is_winner} : player
