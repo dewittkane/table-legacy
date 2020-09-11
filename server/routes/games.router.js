@@ -204,6 +204,7 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:gameInstanceId', (req, res) => {
+    //AND "creators_id" = $2 (req.user.id)
     const queryText = `DELETE FROM "game_instance" WHERE id = $1`
     pool.query(queryText, [req.params.gameInstanceId])
         .then(response => {
@@ -212,6 +213,49 @@ router.delete('/:gameInstanceId', (req, res) => {
             console.log('error deleting game:', error);
             res.sendStatus(500)            
         })
+})
+
+router.put('/:gameInstanceId', async (req, res) => {
+    const client = await pool.connect();
+    console.log(req.body);
+    
+    try {
+
+        //tells sql to start transaction
+        await client.query('BEGIN')
+        await client.query(`UPDATE game_instance SET (date_played, creator_notes) = ($1, $2) 
+        WHERE id = $3 AND creator_id = $4;`, [req.body.date_played, req.body.creator_notes, req.params.gameInstanceId, req.user.id]);
+        
+        //Promise.all - there's an array of promises here, wait for all of them to be done.
+        //insert const results =
+        await client.query('DELETE FROM players WHERE game_instance_id = $1', [req.params.gameInstanceId])
+
+        await Promise.all(req.body.players.map(player => {
+            if (player.users_id) {
+                const insertPlayerText = `INSERT INTO "players" ("users_id", "players_name", "game_instance_id", "score", "is_winner")
+                VALUES ($1, $2, $3, $4, $5)`
+                const insertLineItemValues = [player.users_id, player.players_name, req.params.gameInstanceId, player.score, player.is_winner]
+                return client.query(insertPlayerText, insertLineItemValues)
+            } else { 
+                const insertPlayerText = `INSERT INTO "players" ("players_name", "game_instance_id", "score", "is_winner")
+                VALUES ($1, $2, $3, $4)`
+                const insertLineItemValues = [player.players_name, req.params.gameInstanceId, player.score, player.is_winner]
+                return client.query(insertPlayerText, insertLineItemValues)
+            }
+        }));
+
+        //made it through it all, lock it in
+        await client.query('COMMIT')
+        res.sendStatus(201);
+    } catch (error) {
+        //we didn't make it all the way through, CANCEL, ABORT
+        await client.query('ROLLBACK')
+        console.log('Error PUT /api/game', error);
+        res.sendStatus(500);
+    } finally {
+        //hanging up the phone
+        client.release()
+    }
 })
 
 module.exports = router;

@@ -53,9 +53,6 @@ function* deleteGame(action){
     try {
         yield axios
             .delete(`/api/games/${action.payload}`)
-            .catch(error => {
-                    console.log('error deleting game', error);
-            })
 
     } catch (error) {
         console.log('Error with deleting game:', error);
@@ -64,11 +61,12 @@ function* deleteGame(action){
 
 function* editGame(action){
     try {
+        console.log(action.payload);
+        console.log(action.payload.game_instance_id);
+
+        
         yield axios
-            .put(`/api/games/`, action.payload)
-            .catch(error => {
-                    console.log('error editing game', error);
-            })
+            .put(`/api/games/${action.payload.game_instance_id}`, action.payload)
 
     } catch (error) {
         console.log('Error with editing game:', error);

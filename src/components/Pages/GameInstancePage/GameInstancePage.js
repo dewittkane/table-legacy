@@ -30,7 +30,15 @@ class GameInstancePage extends Component {
         let editedGame = {...gameInfo, players}
         this.props.dispatch({type: 'EDIT_GAME', payload: editedGame })
     }
-    
+
+    cancelEdits = () => {
+        this.props.dispatch({type: 'SET_GAME_TO_EDIT', payload: this.props.store.gameInstance.gameInstance})
+        this.props.dispatch({ 
+            type: 'SET_TABLE',
+            payload: this.props.store.gameInstance.players})
+        this.setState({isEditMode: !this.state.isEditMode})
+    }
+
   render() {
     return (
         <>
@@ -67,7 +75,7 @@ class GameInstancePage extends Component {
                         >Submit Changes
                     </Button>
                     <Button
-                        onClick={() => this.setState({isEditMode: !this.state.isEditMode})}
+                        onClick={this.cancelEdits}
                         variant="contained"
                         >Cancel
                     </Button>

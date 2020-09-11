@@ -12,6 +12,8 @@ function* getGameInstance(action){
 
         yield put({ type: 'SET_GAME_INSTANCE', payload: response.data })
 
+        //SET TABLE
+
 
     } catch (error) {
         console.log('Error with getting game instance:', error);

@@ -2,46 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { Checkbox, TableRow, TableCell, TextField, Typography } from '@material-ui/core';
-import { Check, Close, Delete } from '@material-ui/icons'
+import { Delete } from '@material-ui/icons'
 
 // Basic class component structure for React with default state
 // value setup. When making a new component be sure to replace
 // the component name PlayerRow with the name for the new
 // component.
 class PlayerRow extends Component {
-  state = {
-    editScoreMode: false,
-    score: 0
-  };
-
-  componentDidMount() {
-    this.setState({
-      score: this.props.player.score
-    })
-  }
-
-  toggleEditScoreMode = () => {
-    this.setState({
-      editScoreMode: !this.state.editScoreMode,
-    })
-  }
 
   toggleWin = () => {
     this.props.dispatch({ type: 'TOGGLE_WIN', payload: this.props.index })
   }
-
-  handleChangeFor = (propName) => (event) => {
-    this.setState({
-      [propName]: event.target.value
-    })
-  }
-  handleScoreEdit = () => {
-    this.props.dispatch({ type: 'EDIT_SCORE', payload: { index: this.props.index, score: this.state.score } });
-    this.toggleEditScoreMode();
-  }
+  // handleScoreEdit = () => {
+  //   this.props.dispatch({ type: 'EDIT_SCORE', payload: { index: this.props.index, score: event.target.value } });
+  // }
   removePlayer = () => {
     this.props.dispatch({ type: 'REMOVE_PLAYER', payload: this.props.index})
   }
+
   render() {
     return (
       <>
@@ -52,9 +30,7 @@ class PlayerRow extends Component {
             </TableCell>
             <TableCell>{this.props.player.username || this.props.player.players_name}</TableCell>
             <TableCell>
-              <TextField value={this.state.score} onChange={this.handleChangeFor('score')} />
-              <Check onClick={this.handleScoreEdit} />
-              <Close onClick={this.toggleEditScoreMode} />
+              <TextField value={this.props.player.score} onChange={(event) => this.props.dispatch({ type: 'EDIT_SCORE', payload: { index: this.props.index, score: event.target.value } })} />
             </TableCell>
             <TableCell align="center">
               <Checkbox onChange={this.toggleWin} checked={this.props.player.is_winner} />
