@@ -6,6 +6,11 @@ import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 
 class GameInstanceCard extends Component {
+
+  handleDetailsButton = () => {
+    // this.props.dispatch({type: 'GET_GAME_INSTANCE', payload: this.props.game.gameInstance.game_instance_id})    
+    this.props.history.push(`/gameDetails/${this.props.game.gameInstance.game_instance_id}`)
+  }
   render() {
     return (
       <Card >
@@ -19,7 +24,7 @@ class GameInstanceCard extends Component {
           </ul>
           <Button 
             variant="contained"
-            onClick={() => this.props.history.push(`/gameDetails/${this.props.game.gameInstance.game_instance_id}`)}
+            onClick={() => this.handleDetailsButton()}
             >Legacy Log
           </Button>
       </Card>

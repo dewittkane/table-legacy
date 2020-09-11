@@ -1,5 +1,7 @@
 const playersTableReducer = (state = [], action) => {
     switch (action.type) {
+      case 'SET_TABLE':
+        return action.payload
       case 'ADD_PLAYER':
         return [...state, action.payload];
       case 'TOGGLE_WIN':

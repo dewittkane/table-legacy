@@ -13,7 +13,7 @@ class LogAGamePage extends Component {
 
 
   logGame = () => {
-    let gameInfo = this.props.store.gameInstance;
+    let gameInfo = this.props.store.logAGame;
     let players = this.props.store.playersTable;
     if( !gameInfo.game ) {
       alert('Please select a game!');
@@ -23,23 +23,23 @@ class LogAGamePage extends Component {
       alert('Please add some players to the game!')
     } else {
       //MAYBE I WANT TO ADD A CONFIRMATION MODAL?!
-      let gameInstance = {...gameInfo, players}
-      this.props.dispatch({type: 'LOG_GAME', payload: gameInstance})
+      let logAGame = {...gameInfo, players}
+      this.props.dispatch({type: 'LOG_GAME', payload: logAGame})
     }
   }
   render() {
     return (
       <div>
         <h2>Log a Game</h2>
-        {this.props.store.gameInstance && <img src={this.props.store.gameInstance.game.images.small} alt={this.props.store.gameInstance.game.name}/>}
+        {this.props.store.logAGame && <img src={this.props.store.logAGame.game.images.small} alt={this.props.store.logAGame.game.name}/>}
         <TextField
-          value={this.props.store.gameInstance.game.name}
+          value={this.props.store.logAGame.game.name}
           variant='filled'
           label='Game?'
         />
         <TextField 
           multiline
-          value={this.props.store.gameInstance.note}
+          value={this.props.store.logAGame.note}
           onChange={(event) => this.props.dispatch({type: 'SET_NOTE', payload: event.target.value})}
           rows={4}
           variant='filled'
@@ -48,14 +48,13 @@ class LogAGamePage extends Component {
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <DatePicker 
             disableToolbar
-            value={this.props.store.gameInstance.date}
-            // onChange={(event) => this.handleDateChange(event)}
+            value={this.props.store.logAGame.date}
             onChange={(date) => this.props.dispatch({type: 'SET_DATE', payload: date})}
             label='Date Played'
             format='dddd, L'
           />
         </MuiPickersUtilsProvider>
-        <PlayerTable />
+        <PlayerTable editMode={true}/>
         <Button 
           variant='contained'
           onClick={this.logGame}>Log your Legacy</Button>

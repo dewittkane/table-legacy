@@ -14,7 +14,7 @@ import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 class PlayerTable extends Component {
   state = {
     heading: 'Player Table',
-    addPlayerMode: false
+    addPlayerMode: false,
   };
 
   togglePlayerMode = () => {
@@ -24,13 +24,19 @@ class PlayerTable extends Component {
   };
 
   componentDidMount(){
-      this.props.dispatch({ 
-        type: 'ADD_PLAYER', 
-        payload:
-            { userId: this.props.store.user.id, 
-            username: this.props.store.user.username, 
-            is_winner: false, 
-            score: 0 }})
+      (this.props.gameInstanceTable 
+        ?
+        this.props.dispatch({ 
+            type: 'SET_TABLE',
+            payload: this.props.store.gameInstance.players})
+        :
+        this.props.dispatch({ 
+            type: 'SET_TABLE', 
+            payload: [
+                { userId: this.props.store.user.id, 
+                username: this.props.store.user.username, 
+                is_winner: false, 
+                score: 0 }]}))
   };
 
 
@@ -42,7 +48,7 @@ class PlayerTable extends Component {
             <Table size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell></TableCell>
+                        {this.props.isEditMode && <TableCell></TableCell>}
                         <TableCell>Player</TableCell>
                         <TableCell>Score</TableCell>
                         <TableCell>Win?</TableCell>
@@ -50,8 +56,9 @@ class PlayerTable extends Component {
                 </TableHead>
                 <TableBody>
                     {this.props.store.playersTable.map((player, i) => (
-                        <PlayerRow key={i} index={i} player={player}/>
+                        <PlayerRow key={i} isEditMode={this.props.isEditMode} index={i} player={player}/>
                     ))}
+                    {this.props.isEditMode &&
                     <TableRow>
                         <TableCell colSpan={4} align="right">
                             <Button 
@@ -60,6 +67,7 @@ class PlayerTable extends Component {
                             </Button>
                         </TableCell>
                     </TableRow>
+                    }
                 </TableBody>
             </Table>
         </TableContainer>

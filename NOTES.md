@@ -3,3 +3,4 @@
 [] - Delete row button from Log a Game Page
 [] - security, only view game instance page if you are a participant'
 [] - reroute user to home, etc.
+[] - gameDetails page is rendering before information update
