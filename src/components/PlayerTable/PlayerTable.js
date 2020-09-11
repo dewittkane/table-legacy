@@ -13,7 +13,6 @@ import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 
 class PlayerTable extends Component {
   state = {
-    heading: 'Player Table',
     addPlayerMode: false,
   };
 
@@ -23,27 +22,10 @@ class PlayerTable extends Component {
       })
   };
 
-  componentDidMount(){
-      (this.props.gameInstanceTable 
-        ?
-        this.props.dispatch({ 
-            type: 'SET_TABLE',
-            payload: this.props.store.gameInstance.players})
-        :
-        this.props.dispatch({ 
-            type: 'SET_TABLE', 
-            payload: [
-                { userId: this.props.store.user.id, 
-                username: this.props.store.user.username, 
-                is_winner: false, 
-                score: 0 }]}))
-  };
-
-
   render() {
     return (
       <div>
-        <h2>{this.state.heading}</h2>
+        <h2>Players:</h2>
         <TableContainer component={Paper}>
             <Table size="small">
                 <TableHead>

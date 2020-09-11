@@ -11,5 +11,8 @@
 [] - fix log a game page....
 [] - combine logAGame and playersTable reducers... DONT NEED TO DO
 [] - add authorized users to routes
-[] - one search that hits my game DB, on that hits API
-[] - move setTable to Saga
+[] - one search that hits my game DB, one that hits API
+[x] - move setTable to Saga
+[] - order player results to alphabetical
+[] - click a name to edit it?
+[] - fix games table to be unique

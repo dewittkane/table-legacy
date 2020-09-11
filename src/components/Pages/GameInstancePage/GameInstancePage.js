@@ -29,6 +29,9 @@ class GameInstancePage extends Component {
         console.log('Submitting edits!');
         let editedGame = {...gameInfo, players}
         this.props.dispatch({type: 'EDIT_GAME', payload: editedGame })
+        this.setState({
+            isEditMode: false
+        })
     }
 
     cancelEdits = () => {
@@ -37,6 +40,11 @@ class GameInstancePage extends Component {
             type: 'SET_TABLE',
             payload: this.props.store.gameInstance.players})
         this.setState({isEditMode: !this.state.isEditMode})
+    }
+
+    deleteGame = () => {
+        this.props.dispatch({type: 'DELETE_GAME', payload:this.props.match.params.gameInstanceId})
+        this.props.history.push('/home')
     }
 
   render() {
@@ -81,7 +89,7 @@ class GameInstancePage extends Component {
                     </Button>
                     <div>
                         <Button
-                            onClick={() => this.props.dispatch({type: 'DELETE_GAME', payload:this.props.match.params.gameInstanceId})}
+                            onClick={this.deleteGame}
                             variant="contained"
                             >Delete Game
                         </Button>
@@ -102,7 +110,7 @@ class GameInstancePage extends Component {
                     </Button>
                     <div>
                         <Button
-                            onClick={() => this.props.dispatch({type: 'DELETE_GAME', payload:this.props.match.params.gameInstanceId})}
+                            onClick={this.deleteGame}
                             variant="contained"
                             >Delete Game
                         </Button>

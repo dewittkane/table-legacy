@@ -149,37 +149,28 @@ router.post('/', async (req, res) => {
     console.log(req.body);
     try {
         const creator_id = req.user.id
-        const {
-            note,
-            date,
-            players
-        } = req.body
-        const {
-            bgaId,
-            name,
-            images,
-            url
-        } = req.body.game
 
         //tells sql to start transaction
         await client.query('BEGIN')
+
+        //COULD DO A COUNT SQL REQUEST AND IF 0, ADD TO GAME TABLE?
         const gameInsertResults = await client.query(`INSERT INTO "game" ("bgaId", "name", "image_url", "url")
             VALUES ($1, $2, $3, $4)
-            RETURNING "id";`, [bgaId, name, images.small, url]);
+            RETURNING "id";`, [req.body.bgaId, req.body.name, req.body.image_url, req.body.url]);
         const game_id = gameInsertResults.rows[0].id
 
         const gameInstanceInsertResults = await client.query(`INSERT INTO "game_instance" ("creator_id", "game_id", "date_played", "creator_notes")
             VALUES ($1, $2, $3, $4)
-            RETURNING "id"`, [creator_id, game_id, date, note])
+            RETURNING "id"`, [creator_id, game_id, req.body.date_played, req.body.creator_notes])
         const game_instance_id = gameInstanceInsertResults.rows[0].id
         
         //Promise.all - there's an array of promises here, wait for all of them to be done.
         //insert const results =
-        await Promise.all(players.map(player => {
-            if (player.userId) {
+        await Promise.all(req.body.players.map(player => {
+            if (player.users_id) {
                 const insertPlayerText = `INSERT INTO "players" ("users_id", "players_name", "game_instance_id", "score", "is_winner")
                 VALUES ($1, $2, $3, $4, $5)`
-                const insertLineItemValues = [player.userId, player.players_name, game_instance_id, player.score, player.is_winner]
+                const insertLineItemValues = [player.users_id, player.players_name, game_instance_id, player.score, player.is_winner]
                 return client.query(insertPlayerText, insertLineItemValues)
             } else { 
                 const insertPlayerText = `INSERT INTO "players" ("players_name", "game_instance_id", "score", "is_winner")
@@ -204,9 +195,8 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:gameInstanceId', (req, res) => {
-    //AND "creators_id" = $2 (req.user.id)
-    const queryText = `DELETE FROM "game_instance" WHERE id = $1`
-    pool.query(queryText, [req.params.gameInstanceId])
+    const queryText = `DELETE FROM "game_instance" WHERE id = $1 AND creators_id = $2`
+    pool.query(queryText, [req.params.gameInstanceId, req.user.id])
         .then(response => {
             res.sendStatus(200)
         }).catch(error => {

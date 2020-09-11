@@ -1,28 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Checkbox, Modal, Paper, TextField } from '@material-ui/core';
+import { Button, Modal, Paper, TextField } from '@material-ui/core';
 
 class AddAPlayerModal extends Component {
   state = {
-    userId: '',
+    users_id: '',
     username: '',
     players_name: '',
-    score: '',
-    is_winner: false
+    is_winner: false,
+    score: ''
   };
-
 
   handleChangeFor = (propName) => (event) => {
     this.setState({
       [propName]: event.target.value
     })
-  }
-
-  handleVictoryToggle = () => {
-      this.setState({
-          is_winner: !this.state.is_winner
-      })
   }
 
   handleAddPlayer = () => {
@@ -45,11 +38,9 @@ class AddAPlayerModal extends Component {
             onClose={this.props.togglePlayerMode}
         >
             <Paper>
-            
-                <h2>{this.state.heading}</h2>
                 <h3>Search for your friend if they have an account:</h3>
                 <TextField
-                    onChange={this.handleChangeFor('userId')}
+                    onChange={this.handleChangeFor('username')}
                     value={this.state.userId} 
                     variant='outlined'
                 />
@@ -60,18 +51,6 @@ class AddAPlayerModal extends Component {
                     variant='outlined'
                 />
                 {JSON.stringify(this.state)}
-                <h3>Score?</h3>
-                <TextField
-                    value={this.state.score}
-                    onChange={this.handleChangeFor('score')}
-                    variant='outlined'
-                    type='number'
-                />
-                <h3>Did they win?!</h3>
-                <Checkbox 
-                    checked={this.state.is_winner}
-                    onChange={this.handleVictoryToggle}
-                />
                 <div>
                     <Button
                         variant='contained'

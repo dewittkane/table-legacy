@@ -11,8 +11,11 @@ function* getGameInstance(action){
         console.log(response.data);
 
         yield put({ type: 'SET_GAME_INSTANCE', payload: response.data })
+        
+        yield put({ 
+            type: 'SET_TABLE',
+            payload: response.data.players})
 
-        //SET TABLE
 
 
     } catch (error) {

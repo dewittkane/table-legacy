@@ -11,13 +11,22 @@ import PlayerTable from '../../PlayerTable/PlayerTable';
 
 class LogAGamePage extends Component {
 
+  componentDidMount(){
+    this.props.dispatch({ 
+      type: 'SET_TABLE', 
+      payload: [
+          { users_id: this.props.store.user.id, 
+          username: this.props.store.user.username, 
+          is_winner: false, 
+          score: '' }]})
+  }
 
   logGame = () => {
     let gameInfo = this.props.store.logAGame;
     let players = this.props.store.playersTable;
-    if( !gameInfo.game ) {
+    if( !gameInfo ) {
       alert('Please select a game!');
-    } else if ( !gameInfo.date ) {
+    } else if ( !gameInfo.date_played ) {
       alert('Please select a date!');
     } else if ( !players ) {
       alert('Please add some players to the game!')
@@ -26,6 +35,9 @@ class LogAGamePage extends Component {
       let logAGame = {...gameInfo, players}
       this.props.dispatch({type: 'LOG_GAME', payload: logAGame})
     }
+    this.props.history.push('/user')
+
+
   }
   render() {
     return (

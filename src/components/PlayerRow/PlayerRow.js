@@ -13,9 +13,6 @@ class PlayerRow extends Component {
   toggleWin = () => {
     this.props.dispatch({ type: 'TOGGLE_WIN', payload: this.props.index })
   }
-  // handleScoreEdit = () => {
-  //   this.props.dispatch({ type: 'EDIT_SCORE', payload: { index: this.props.index, score: event.target.value } });
-  // }
   removePlayer = () => {
     this.props.dispatch({ type: 'REMOVE_PLAYER', payload: this.props.index})
   }
