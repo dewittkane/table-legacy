@@ -195,7 +195,7 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:gameInstanceId', (req, res) => {
-    const queryText = `DELETE FROM "game_instance" WHERE id = $1 AND creators_id = $2`
+    const queryText = `DELETE FROM "game_instance" WHERE id = $1 AND creator_id = $2`
     pool.query(queryText, [req.params.gameInstanceId, req.user.id])
         .then(response => {
             res.sendStatus(200)

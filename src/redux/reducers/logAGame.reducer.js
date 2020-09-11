@@ -14,10 +14,10 @@ let startingGame = {
 
 }
 
-const LogAGameReducer = (state = {...startingGame, date_played: new Date()}, action) => {
+const LogAGameReducer = (state = {...startingGame, date_played: new Date(), creator_notes: ''}, action) => {
     switch (action.type) {
       case 'SET_NEW_GAME':
-        return {...startingGame, date_played: new Date()}
+        return {...startingGame, date_played: new Date(), creator_notes: ''}
       case 'SET_GAME_NAME':
         return {...state, name: action.payload};
       case 'SET_DATE':
