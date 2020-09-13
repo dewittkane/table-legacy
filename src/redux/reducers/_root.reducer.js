@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
-import search from './search.reducer';
+import gameSearch from './gameSearch.reducer';
 import playersTable from './playersTable.reducer';
 import logAGame from './logAGame.reducer';
 import games from './games.reducer';
 import gameInstance from './gameInstance.reducer';
+import userSearch from './userSearch.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -16,11 +17,12 @@ import gameInstance from './gameInstance.reducer';
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
-  search,
+  gameSearch,
   playersTable,
   logAGame,
   games,
-  gameInstance
+  gameInstance,
+  userSearch
 });
 
 export default rootReducer;

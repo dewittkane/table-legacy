@@ -167,10 +167,10 @@ router.post('/', async (req, res) => {
         //Promise.all - there's an array of promises here, wait for all of them to be done.
         //insert const results =
         await Promise.all(req.body.players.map(player => {
-            if (player.users_id) {
+            if (player.id) {
                 const insertPlayerText = `INSERT INTO "players" ("users_id", "players_name", "game_instance_id", "score", "is_winner")
                 VALUES ($1, $2, $3, $4, $5)`
-                const insertLineItemValues = [player.users_id, player.players_name, game_instance_id, player.score, player.is_winner]
+                const insertLineItemValues = [player.id, player.username, game_instance_id, player.score, player.is_winner]
                 return client.query(insertPlayerText, insertLineItemValues)
             } else { 
                 const insertPlayerText = `INSERT INTO "players" ("players_name", "game_instance_id", "score", "is_winner")
@@ -247,5 +247,38 @@ router.put('/:gameInstanceId', async (req, res) => {
         client.release()
     }
 })
+
+router.post('/updateDatabase', async (req, res) => {
+    //Calling sql and not hanging up
+    const client = await pool.connect();
+    console.log(req.body);
+    try {
+
+        //tells sql to start transaction
+        await client.query('BEGIN')
+
+        //Promise.all - there's an array of promises here, wait for all of them to be done.
+        //insert const results =
+        await Promise.all(req.body.games.map(game => {
+
+                const insertGameText = `INSERT INTO "game" ("bgaId", "name", "image_url", "url")
+                VALUES ($1, $2, $3, $4)`
+                const insertLineItemValues = [game.id, game.name, game.images.small, game.url]
+                return client.query(insertGameText, insertLineItemValues)
+        }));
+
+        //made it through it all, lock it in
+        await client.query('COMMIT')
+        res.sendStatus(201);
+    } catch (error) {
+        //we didn't make it all the way through, CANCEL, ABORT
+        await client.query('ROLLBACK')
+        console.log('Error filling database!', error);
+        res.sendStatus(500);
+    } finally {
+        //hanging up the phone
+        client.release()
+    }
+});
 
 module.exports = router;

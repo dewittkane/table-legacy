@@ -32,8 +32,34 @@ function* searchApi(action){
       }
 }
 
+function* searchGames() {
+
+    try {
+        const results = yield axios.get(`/api/games/search/${action.payload}`)
+    
+        yield put({type: 'SET_USER_SEARCH', payload: results.data})
+    
+    } catch (error) {
+        console.log('User search request failed', error);
+    }
+
+}
+// function* updateDB() {
+//     let response = yield axios
+//     .get(`
+//         https://api.boardgameatlas.com/api/search?limit=100&client_id=${apiKey}&order_by=popularity&`
+//     )
+//     .catch(error => {
+//         console.log(error);
+//     })
+
+//     yield axios.post('/api/games/updateDatabase', response.data);
+// }
+
 function* searchSaga() {
     yield takeLatest('SEARCH', searchApi);
+    yield takeLatest('SEARCH_GAME', searchGames);
+    // yield takeLatest('UPDATE_DB', updateDB)
   }
   
   export default searchSaga;

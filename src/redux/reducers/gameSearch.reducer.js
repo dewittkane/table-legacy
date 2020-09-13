@@ -1,6 +1,6 @@
-const searchReducer = (state = [], action) => {
+const gameSearchReducer = (state = [], action) => {
     switch (action.type) {
-      case 'SET_SEARCH':
+      case 'SET_GAME_SEARCH':
         return action.payload;
       default:
         return state;
@@ -8,5 +8,5 @@ const searchReducer = (state = [], action) => {
   };
   
   // search will be on the redux state at:
-  // state.search
-  export default searchReducer;
+  // state.gameSearch
+  export default gameSearchReducer;

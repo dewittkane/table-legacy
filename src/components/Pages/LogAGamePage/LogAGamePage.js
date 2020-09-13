@@ -5,17 +5,28 @@ import { Button, TextField } from '@material-ui/core';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import PlayerTable from '../../PlayerTable/PlayerTable';
+import GameSearchModal from '../../GameSearchModal/GameSearchModal';
 // import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 
 
 class LogAGamePage extends Component {
 
+  state = {
+    gameSearchMode: false
+  }
+
+  toggleGameSearchMode = () => {
+    this.setState({
+      gameSearchMode: !this.state.gameSearchMode
+    })
+  }
+
   componentDidMount(){
     this.props.dispatch({ 
       type: 'SET_TABLE', 
       payload: [
-          { users_id: this.props.store.user.id, 
+          { id: this.props.store.user.id, 
           username: this.props.store.user.username, 
           is_winner: false, 
           score: '' }]})
@@ -49,6 +60,7 @@ class LogAGamePage extends Component {
           variant='filled'
           label='Game?'
         />
+        <GameSearchModal gameSearchMode={this.state.gameSearchMode} toggleGameSearchMode={this.toggleGameSearchMode}/>
         <TextField 
           multiline
           value={this.props.store.logAGame.creator_notes}

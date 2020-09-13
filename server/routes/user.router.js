@@ -44,4 +44,17 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
+router.get('/search/:queryString', (req, res) => {
+  const queryText = `SELECT id, username FROM "user" WHERE "username" ILIKE '%' || $1 || '%' LIMIT 5;`
+  console.log(req.params.queryString);
+  
+  pool.query(queryText, [req.params.queryString])
+      .then(response => {
+        res.send(response.rows)
+      }
+    ).catch(error => {
+      console.log('Error in search:', error);    
+    })
+})
+
 module.exports = router;

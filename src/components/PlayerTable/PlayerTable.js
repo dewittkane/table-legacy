@@ -17,9 +17,10 @@ class PlayerTable extends Component {
   };
 
   togglePlayerMode = () => {
-      this.setState({
+    this.setState({
           addPlayerMode: !this.state.addPlayerMode
       })
+    this.props.dispatch({ type: 'RESET_USER_SEARCH' })
   };
 
   render() {

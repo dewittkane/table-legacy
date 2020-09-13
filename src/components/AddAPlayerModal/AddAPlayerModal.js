@@ -5,6 +5,7 @@ import { Button, Modal, Paper, TextField } from '@material-ui/core';
 
 class AddAPlayerModal extends Component {
   state = {
+    query: '',
     users_id: '',
     username: '',
     players_name: '',
@@ -31,6 +32,21 @@ class AddAPlayerModal extends Component {
       this.props.togglePlayerMode();
   }
 
+  handleAddUser = (user) => {
+    this.props.dispatch({ type: 'ADD_PLAYER', payload: {...user, is_winner: false, score: ''}});
+    this.props.togglePlayerMode();
+  }
+
+  searchUser = (event) => {
+    this.setState({
+      query: event.target.value
+  }, () => this.fetchSearchResults()
+  )}
+
+  fetchSearchResults = () => {
+    this.props.dispatch({ type: 'SEARCH_USER', payload: this.state.query })
+  }
+
   render() {
     return (
         <Modal
@@ -40,10 +56,13 @@ class AddAPlayerModal extends Component {
             <Paper>
                 <h3>Search for your friend if they have an account:</h3>
                 <TextField
-                    onChange={this.handleChangeFor('username')}
+                    onChange={this.searchUser}
                     value={this.state.userId} 
                     variant='outlined'
                 />
+                {this.props.store.userSearch && this.props.store.userSearch.map(user => (
+                  <p key={user.id} onClick={() => this.handleAddUser(user)}>{user.username}</p>
+                ))}
                 <h3>Or type in their name if they aren't part of the Table Legacy community:</h3>
                 <TextField
                     onChange={this.handleChangeFor('players_name')} 
