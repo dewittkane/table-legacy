@@ -15,4 +15,5 @@
 [x] - move setTable to Saga
 [] - order player results to alphabetical
 [] - click a name to edit it?
-[] - fix games table to be unique
+[x] - fix games table to be unique
+[] - fix add game to db button

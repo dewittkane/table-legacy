@@ -32,17 +32,15 @@ function* searchApi(action){
       }
 }
 
-function* searchGames() {
-
+function* searchGames( action ) {
     try {
         const results = yield axios.get(`/api/games/search/${action.payload}`)
     
-        yield put({type: 'SET_USER_SEARCH', payload: results.data})
+        yield put({type: 'SET_GAME_SEARCH', payload: results.data})
     
     } catch (error) {
-        console.log('User search request failed', error);
+        console.log('Game search request failed', error);
     }
-
 }
 // function* updateDB() {
 //     let response = yield axios

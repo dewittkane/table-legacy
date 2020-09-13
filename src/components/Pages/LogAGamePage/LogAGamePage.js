@@ -54,12 +54,18 @@ class LogAGamePage extends Component {
     return (
       <div>
         <h2>Log a Game</h2>
-        {this.props.store.logAGame && <img src={this.props.store.logAGame.image_url} alt={this.props.store.logAGame.name}/>}
-        <TextField
-          value={this.props.store.logAGame.name}
-          variant='filled'
-          label='Game?'
-        />
+        {this.props.store.logAGame.name ?
+        <>
+        <img src={this.props.store.logAGame.image_url} alt={this.props.store.logAGame.name}/>
+        <h1>{this.props.store.logAGame.name}</h1>
+        </>
+        :
+        <Button
+          onClick={this.toggleGameSearchMode}
+          variant='contained'>
+          Choose a game!
+        </Button>
+        }
         <GameSearchModal gameSearchMode={this.state.gameSearchMode} toggleGameSearchMode={this.toggleGameSearchMode}/>
         <TextField 
           multiline

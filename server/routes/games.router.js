@@ -281,4 +281,16 @@ router.post('/updateDatabase', async (req, res) => {
     }
 });
 
+router.get('/search/:queryString', (req, res) => {
+    const queryText = `SELECT * FROM "game" WHERE "name" ILIKE '%' || $1 || '%' LIMIT 5;`
+    console.log(req.params.queryString);
+    
+    pool.query(queryText, [req.params.queryString])
+        .then(response => {
+          res.send(response.rows)
+        }
+      ).catch(error => {
+        console.log('Error in search:', error);    
+      })
+  })
 module.exports = router;

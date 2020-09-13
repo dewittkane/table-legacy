@@ -7,6 +7,7 @@ class GameSearchModal extends Component {
   handleChooseGame = (game) => {
     // this.props.dispatch({ type: 'ADD_PLAYER', payload: {...user, is_winner: false, score: ''}});
     console.log('Choosing this game:', game);
+    this.props.dispatch({ type: 'SET_GAME', payload: game})
     this.props.toggleGameSearchMode();
     }
 
