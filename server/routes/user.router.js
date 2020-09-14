@@ -44,11 +44,11 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
+//Searchs the user list and returns the 5 closest matches to the string, excluding the user.
 router.get('/search/:queryString', (req, res) => {
-  const queryText = `SELECT id, username FROM "user" WHERE "username" ILIKE '%' || $1 || '%' LIMIT 5;`
-  console.log(req.params.queryString);
+  const queryText = `SELECT id, username FROM "user" WHERE "username" ILIKE '%' || $1 || '%' AND "id" != $2 LIMIT 5 ;`
   
-  pool.query(queryText, [req.params.queryString])
+  pool.query(queryText, [req.params.queryString, req.user.id])
       .then(response => {
         res.send(response.rows)
       }

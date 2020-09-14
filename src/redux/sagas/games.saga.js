@@ -10,6 +10,8 @@ function* logGame(action){
 
         yield put({ type: 'SET_NEW_GAME' })
 
+        yield put({ type: 'GET_YOUR_GAMES' })
+
     } catch (error) {
         console.log('Error with logging game:', error);
       }
@@ -19,9 +21,7 @@ function* getTheirGames(action){
     try {
         let response = yield axios
             .get(`/api/games/myGamesAgainst/${action.payload}`)
-            .catch(error => {
-                    console.log(error);
-            })
+
         console.log(response.data);
 
         yield put({ type: 'SET_GAMES', payload: response.data })
@@ -32,16 +32,12 @@ function* getTheirGames(action){
       }
 }
 
-function* getYourGames(action){
+function* getYourGames(){
     try {
         let response = yield axios
             .get(`/api/games/myGames`)
-            .catch(error => {
-                    console.log(error);
-            })
         console.log(response.data);
         yield put({ type: 'SET_GAMES', payload: response.data })
-
 
     } catch (error) {
         console.log('Error with getting your games:', error);
@@ -51,6 +47,8 @@ function* getYourGames(action){
 function* deleteGame(action){
     try {
         yield axios.delete(`/api/games/${action.payload}`)
+
+        yield put({ type: 'GET_YOUR_GAMES' })
 
     } catch (error) {
         console.log('Error with deleting game:', error);
@@ -62,6 +60,8 @@ function* editGame(action){
         yield axios.put(`/api/games/${action.payload.game_instance_id}`, action.payload)
 
         yield put({type: 'GET_GAME_INSTANCE', payload: action.payload.game_instance_id})
+
+        
 
     } catch (error) {
         console.log('Error with editing game:', error);

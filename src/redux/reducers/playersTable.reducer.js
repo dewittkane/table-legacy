@@ -2,6 +2,10 @@ const playersTableReducer = (state = [], action) => {
     switch (action.type) {
       case 'SET_TABLE':
         return action.payload
+      case 'SET_TABLE_TO_EDIT':
+        return action.payload.map(player => (
+          player.hasOwnProperty('users_id') ? {...player, id: player.users_id} : player
+        ))
       case 'ADD_PLAYER':
         return [...state, action.payload];
       case 'REMOVE_PLAYER':

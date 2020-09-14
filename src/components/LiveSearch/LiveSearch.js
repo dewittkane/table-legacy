@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import axios from 'axios';
 
+///////////////////////////////////////////////////////////////
+//THIS COMPONENT ISN'T INCLUDED.  THIS WAS MY SEARCH SPIKE/////
+///////////////////////////////////////////////////////////////
 
-//THIS COMPONENT ISN'T INCLUDED.  THIS WAS MY SEARCH SPIKE
 class LiveGameSearch extends Component {
     state = {
         query: '',

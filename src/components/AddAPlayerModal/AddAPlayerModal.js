@@ -6,30 +6,31 @@ import { Button, Modal, Paper, TextField } from '@material-ui/core';
 class AddAPlayerModal extends Component {
   state = {
     query: '',
-    users_id: '',
-    username: '',
-    players_name: '',
-    is_winner: false,
-    score: ''
+    player: {
+      players_name: '',
+      is_winner: false,
+      score: ''
+      }
   };
 
-  handleChangeFor = (propName) => (event) => {
+  handlePlayerNameChange = (event) => {
     this.setState({
-      [propName]: event.target.value
+      player: {
+        ...this.state.player,
+        players_name: event.target.value
+      }
     })
   }
 
   handleAddPlayer = () => {
-      if (this.state.username) {
-        console.log('Adding Player:', this.state.username);
-      } else if (this.state.players_name) {
+      if (this.state.player.players_name) {
         console.log('Adding Player:', this.state.players_name);
+        this.props.dispatch({ type: 'ADD_PLAYER', payload: this.state.player });
+        this.props.togglePlayerMode();
+
       } else {
-        alert('Please choose a friend!')
-        return false
+        alert("Please enter your friend's name, or select a user!")
       }
-      this.props.dispatch({ type: 'ADD_PLAYER', payload: this.state });
-      this.props.togglePlayerMode();
   }
 
   handleAddUser = (user) => {
@@ -57,19 +58,20 @@ class AddAPlayerModal extends Component {
                 <h3>Search for your friend if they have an account:</h3>
                 <TextField
                     onChange={this.searchUser}
-                    value={this.state.userId} 
                     variant='outlined'
                 />
+                <div>
                 {this.props.store.userSearch && this.props.store.userSearch.map(user => (
-                  <p key={user.id} onClick={() => this.handleAddUser(user)}>{user.username}</p>
+                  <Button variant='contained' key={user.id} onClick={() => this.handleAddUser(user)}>{user.username}</Button>
                 ))}
-                <h3>Or type in their name if they aren't part of the Table Legacy community:</h3>
+                </div>
+
+                <h5>Friend doesn't have an account? Add them with their name here!</h5>
                 <TextField
-                    onChange={this.handleChangeFor('players_name')} 
-                    value={this.state.players_name}
+                    onChange={this.handlePlayerNameChange} 
+                    value={this.state.player.players_name}
                     variant='outlined'
                 />
-                {JSON.stringify(this.state)}
                 <div>
                     <Button
                         variant='contained'

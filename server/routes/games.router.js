@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
+// gets the game instances that the logged in user has played
 router.get('/myGames', async (req, res) => {
     const client = await pool.connect();
 
@@ -57,7 +58,7 @@ router.get('/myGames', async (req, res) => {
         client.release()
     }
   });
-
+// gets the game instances that both the logged in user and selected user have played
 router.get('/myGamesAgainst/:id', async (req, res) => {
     const client = await pool.connect();
 
@@ -115,7 +116,7 @@ router.get('/myGamesAgainst/:id', async (req, res) => {
         client.release()
     }
   });
-
+// gets the selected game instance
 router.get('/gameInstance/:gameInstanceId', (req, res) => {
     const queryText = `SELECT * FROM "game" 
     FULL JOIN "game_instance" ON game.id = game_instance.game_id
@@ -217,10 +218,10 @@ router.put('/:gameInstanceId', async (req, res) => {
         await client.query('DELETE FROM players WHERE game_instance_id = $1', [req.params.gameInstanceId])
 
         await Promise.all(req.body.players.map(player => {
-            if (player.users_id) {
+            if (player.id) {
                 const insertPlayerText = `INSERT INTO "players" ("users_id", "players_name", "game_instance_id", "score", "is_winner")
                 VALUES ($1, $2, $3, $4, $5)`
-                const insertLineItemValues = [player.users_id, player.players_name, req.params.gameInstanceId, player.score, player.is_winner]
+                const insertLineItemValues = [player.id, player.players_name, req.params.gameInstanceId, player.score, player.is_winner]
                 return client.query(insertPlayerText, insertLineItemValues)
             } else { 
                 const insertPlayerText = `INSERT INTO "players" ("players_name", "game_instance_id", "score", "is_winner")

@@ -23,18 +23,27 @@ class LogAGamePage extends Component {
   }
 
   componentDidMount(){
+    //prepopulates the player table with 
     this.props.dispatch({ 
       type: 'SET_TABLE', 
       payload: [
           { id: this.props.store.user.id, 
           username: this.props.store.user.username, 
           is_winner: false, 
-          score: '' }]})
+          score: '' }]});
+
+    //resets the Game reducer
+    this.props.dispatch({
+      type: 'SET_NEW_GAME'
+    })
   }
 
   logGame = () => {
+    //packages info from the reducers
     let gameInfo = this.props.store.logAGame;
     let players = this.props.store.playersTable;
+
+    //does a few data quality checks
     if( !gameInfo ) {
       alert('Please select a game!');
     } else if ( !gameInfo.date_played ) {
@@ -43,9 +52,10 @@ class LogAGamePage extends Component {
       alert('Please add some players to the game!')
     } else {
       //MAYBE I WANT TO ADD A CONFIRMATION MODAL?!
+      //sends off the new game instance to the DB and then sends the user back to their homepage
       let logAGame = {...gameInfo, players}
       this.props.dispatch({type: 'LOG_GAME', payload: logAGame})
-      this.props.history.push('/user')
+      this.props.history.push('/home')
     }
   }
   render() {
