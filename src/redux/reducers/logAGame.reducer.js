@@ -3,7 +3,7 @@ const LogAGameReducer = (state = [], action) => {
       case 'SET_NEW_GAME':
         return {date_played: new Date(), creator_notes: ''}
       case 'SET_GAME':
-        return action.payload;
+        return {...state, ...action.payload};
       case 'SET_DATE':
         return {...state, date_played: action.payload};
       case 'SET_NOTE':

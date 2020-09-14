@@ -7,9 +7,8 @@ function* logGame(action){
     try {
         yield axios
             .post(`/api/games`, action.payload)
-            .catch(error => {
-                    console.log('error posting game', error);
-            })
+
+        yield put({ type: 'SET_NEW_GAME' })
 
     } catch (error) {
         console.log('Error with logging game:', error);

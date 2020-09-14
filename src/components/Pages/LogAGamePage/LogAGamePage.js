@@ -45,10 +45,8 @@ class LogAGamePage extends Component {
       //MAYBE I WANT TO ADD A CONFIRMATION MODAL?!
       let logAGame = {...gameInfo, players}
       this.props.dispatch({type: 'LOG_GAME', payload: logAGame})
+      this.props.history.push('/user')
     }
-    this.props.history.push('/user')
-
-
   }
   render() {
     return (

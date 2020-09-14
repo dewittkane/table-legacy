@@ -11,7 +11,8 @@ router.get('/myGames', async (req, res) => {
             FULL JOIN "game" ON game_instance.game_id = game.id
             FULL JOIN "players" ON game_instance.id = players.game_instance_id
             FULL JOIN "user" ON players.users_id = "user".id
-            WHERE "players".users_id  = $1`
+            WHERE "players".users_id  = $1
+            ORDER BY "game_instance".date_played DESC;`
 
         await client.query('BEGIN')
         const gameSelectResults = await client.query(firstQueryText, [users_id]);
@@ -68,7 +69,8 @@ router.get('/myGamesAgainst/:id', async (req, res) => {
             FULL JOIN "players" ON game_instance.id = players.game_instance_id
             FULL JOIN "user" ON players.users_id = "user".id
             WHERE "players".users_id IN ($1, $2)
-            GROUP BY game_instance.id HAVING count("players".users_id) = 2;`
+            GROUP BY game_instance.id HAVING count("players".users_id) = 2
+            ORDER BY "game_instance".date_played DESC;`
 
         await client.query('BEGIN')
         const gameSelectResults = await client.query(firstQueryText, [users_id, requested_id]);
@@ -153,15 +155,9 @@ router.post('/', async (req, res) => {
         //tells sql to start transaction
         await client.query('BEGIN')
 
-        //COULD DO A COUNT SQL REQUEST AND IF 0, ADD TO GAME TABLE?
-        const gameInsertResults = await client.query(`INSERT INTO "game" ("bgaId", "name", "image_url", "url")
-            VALUES ($1, $2, $3, $4)
-            RETURNING "id";`, [req.body.bgaId, req.body.name, req.body.image_url, req.body.url]);
-        const game_id = gameInsertResults.rows[0].id
-
         const gameInstanceInsertResults = await client.query(`INSERT INTO "game_instance" ("creator_id", "game_id", "date_played", "creator_notes")
             VALUES ($1, $2, $3, $4)
-            RETURNING "id"`, [creator_id, game_id, req.body.date_played, req.body.creator_notes])
+            RETURNING "id"`, [creator_id, req.body.id, req.body.date_played, req.body.creator_notes])
         const game_instance_id = gameInstanceInsertResults.rows[0].id
         
         //Promise.all - there's an array of promises here, wait for all of them to be done.
