@@ -14,7 +14,7 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../Pages/AboutPage/AboutPage';
-import UserPage from '../Pages/HomePage/HomePage';
+import HomePage from '../Pages/HomePage/HomePage';
 import InfoPage from '../Pages/InfoPage/InfoPage';
 import LandingPage from '../Pages/LandingPage/LandingPage';
 import LoginPage from '../Pages/LoginPage/LoginPage';
@@ -54,8 +54,8 @@ class App extends Component {
             <ProtectedRoute
               // logged in shows UserPage else shows LoginPage
               exact
-              path="/user"
-              component={UserPage}
+              path="/home"
+              component={HomePage}
             />
 
             <ProtectedRoute
@@ -65,41 +65,6 @@ class App extends Component {
               component={InfoPage}
             />
 
-            {/* When a value is supplied for the authRedirect prop the user will
-            be redirected to the path supplied when logged in, otherwise they will
-            be taken to the component and path supplied. */}
-            <ProtectedRoute
-              // with authRedirect:
-              // - if logged in, redirects to "/user"
-              // - else shows LoginPage at /login
-              exact
-              path="/login"
-              component={LoginPage}
-              authRedirect="/user"
-            />
-            <ProtectedRoute
-              // with authRedirect:
-              // - if logged in, redirects to "/user"
-              // - else shows RegisterPage at "/registration"
-              exact
-              path="/registration"
-              component={RegisterPage}
-              authRedirect="/user"
-            />
-            <ProtectedRoute
-              // with authRedirect:
-              // - if logged in, redirects to "/user"
-              // - else shows LandingPage at "/home"
-              exact
-              path="/home"
-              component={LandingPage}
-              authRedirect="/user"
-            />
-            <Route
-              exact
-              path="/search"
-              component={LiveSearch}
-            />
             <ProtectedRoute
               exact
               path="/loggame"
@@ -111,6 +76,28 @@ class App extends Component {
               path="/gameDetails/:gameInstanceId"
               component={GameInstancePage}
             />
+            {/* When a value is supplied for the authRedirect prop the user will
+            be redirected to the path supplied when logged in, otherwise they will
+            be taken to the component and path supplied. */}
+            <ProtectedRoute
+              // with authRedirect:
+              // - if logged in, redirects to "/home"
+              // - else shows LoginPage at /login
+              exact
+              path="/login"
+              component={LoginPage}
+              authRedirect="/home"
+            />
+            <ProtectedRoute
+              // with authRedirect:
+              // - if logged in, redirects to "/home"
+              // - else shows RegisterPage at "/registration"
+              exact
+              path="/registration"
+              component={RegisterPage}
+              authRedirect="/home"
+            />
+
 
 
             {/* If none of the other routes matched, we will show a 404. */}

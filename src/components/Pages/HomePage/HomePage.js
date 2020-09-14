@@ -15,10 +15,10 @@ class UserPage extends Component {
     return (
       <div>
         <h1 id="welcome">Welcome, {this.props.store.user.username}!</h1>
+        <Button variant='contained' onClick={() => this.props.history.push('/loggame') }>Log a Game!</Button>
         {this.props.store.games.map(game => (
           <GameInstanceCard key={game.gameInstance.game_instance_id} game={game} />
         ))}
-        <Button variant='contained' onClick={() => this.props.history.push('/loggame') }>Log a Game!</Button>
       </div>
     );
   }
