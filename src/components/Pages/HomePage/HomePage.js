@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom'
 import GameInstanceCard from '../../GameInstanceCard/GameInstanceCard';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 
 class UserPage extends Component {
 
@@ -16,9 +16,11 @@ class UserPage extends Component {
       <div>
         <h1 id="welcome">Welcome, {this.props.store.user.username}!</h1>
         <Button variant='contained' onClick={() => this.props.history.push('/loggame') }>Log a Game!</Button>
-        {this.props.store.games.map(game => (
-          <GameInstanceCard key={game.gameInstance.game_instance_id} game={game} />
-        ))}
+        <Grid container spacing={3}>
+          {this.props.store.games.map(game => (
+            <GameInstanceCard key={game.gameInstance.game_instance_id} game={game} />
+          ))}
+        </Grid>
       </div>
     );
   }
