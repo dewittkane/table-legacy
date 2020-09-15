@@ -20,3 +20,4 @@
 [] - log a game select a date issue
 [] - delete swal
 [] - make links on game instance FEEL like links
+[] - back button not on home page

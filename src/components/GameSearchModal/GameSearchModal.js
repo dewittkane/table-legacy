@@ -19,8 +19,8 @@ class GameSearchModal extends Component {
   render() {
     return (
         <Modal
-            open={this.props.gameSearchMode}
-            onClose={this.props.toggleGameSearchMode}
+            open={this.props.apiSearchMode}
+            onClose={this.props.toggleApiSearchMode}
         >
             <Paper>
                 <h3>Search for your favorite game:</h3>
@@ -43,7 +43,7 @@ class GameSearchModal extends Component {
                 <div>
                     <Button 
                         variant='contained'
-                        onClick={this.props.toggleGameSearchMode}
+                        onClick={this.props.toggleApiSearchMode}
                         >Cancel
                     </Button>
                 </div>

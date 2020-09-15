@@ -5,7 +5,7 @@ import { Button, TextField } from '@material-ui/core';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import PlayerTable from '../../PlayerTable/PlayerTable';
-import GameSearchModal from '../../GameSearchModal/GameSearchModal';
+import GameSelectModal from '../../GameSelectModal/GameSelectModal';
 // import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 
@@ -13,12 +13,12 @@ import GameSearchModal from '../../GameSearchModal/GameSearchModal';
 class LogAGamePage extends Component {
 
   state = {
-    gameSearchMode: false
+    gameSelectMode: false
   }
 
-  toggleGameSearchMode = () => {
+  toggleGameSelectMode = () => {
     this.setState({
-      gameSearchMode: !this.state.gameSearchMode
+      gameSelectMode: !this.state.gameSelectMode
     })
   }
 
@@ -69,12 +69,12 @@ class LogAGamePage extends Component {
         </>
         :
         <Button
-          onClick={this.toggleGameSearchMode}
+          onClick={this.toggleGameSelectMode}
           variant='contained'>
           Choose a game!
         </Button>
         }
-        <GameSearchModal gameSearchMode={this.state.gameSearchMode} toggleGameSearchMode={this.toggleGameSearchMode}/>
+        <GameSelectModal gameSelectMode={this.state.gameSelectMode} toggleGameSelectMode={this.toggleGameSelectMode}/>
         <TextField 
           multiline
           value={this.props.store.logAGame.creator_notes}

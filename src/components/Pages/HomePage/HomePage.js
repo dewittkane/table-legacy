@@ -9,6 +9,10 @@ class HomePage extends Component {
 
   componentDidMount = () => {
     this.props.dispatch({type: 'GET_YOUR_GAMES'})
+    console.log(this.props.history);
+    console.log(this.props.match);
+    
+    
   }
 
   render() {

@@ -8,7 +8,13 @@ import { Grid } from '@material-ui/core';
 class UserPage extends Component {
 
   componentDidMount = () => {
+    //redirects to home page if user tries to get to their user detail page
+    if (Number(this.props.match.params.usersId) === this.props.store.user.id) {
+        this.props.history.push('/home')
+    } else {
+    //otherwise, sends a request to get shared game information
     this.props.dispatch({type: 'GET_THEIR_GAMES', payload: this.props.match.params.usersId })
+    }
   }
 
   render() {

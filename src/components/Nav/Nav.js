@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
@@ -16,8 +16,10 @@ const Nav = (props) => {
     loginLinkData.text = 'Home';
   }
 
+
   return (
     <div className="nav">
+      {<h2 className="nav-link" onClick={props.history.goBack}>Back</h2>}
       <Link to="/home">
         <h2 className="nav-title">Table Legacy</h2>
       </Link>
@@ -37,4 +39,4 @@ const Nav = (props) => {
   );
 };
 
-export default connect(mapStoreToProps)(Nav);
+export default connect(mapStoreToProps)(withRouter(Nav));
