@@ -6,6 +6,7 @@ import { Button, TextField, Typography } from '@material-ui/core';
 import PlayerTable from '../../PlayerTable/PlayerTable';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
+import { withRouter } from 'react-router-dom';
 
 class GameInstancePage extends Component {
     state = {
@@ -52,12 +53,13 @@ class GameInstancePage extends Component {
         <>
         {this.props.store.gameInstance.gameInstance &&
             <>
-            <img src={this.props.store.gameInstance.gameInstance.image_url} alt={this.props.store.gameInstance.gameInstance.name}></img>
-            <h1>{this.props.store.gameInstance.gameInstance.name}</h1>
+
         {this.state.isEditMode
         
         ?  
             <div>
+                <img src={this.props.store.gameInstance.gameInstance.image_url} alt={this.props.store.gameInstance.gameInstance.name}></img>
+                <h1>{this.props.store.gameInstance.gameInstance.name}</h1>
                 <MuiPickersUtilsProvider utils={MomentUtils}>
                     <DatePicker 
                         disableToolbar
@@ -97,6 +99,15 @@ class GameInstancePage extends Component {
             </div>
         :
             <div>
+                <img 
+                    src={this.props.store.gameInstance.gameInstance.image_url} 
+                    alt={this.props.store.gameInstance.gameInstance.name}
+                    onClick={() => this.props.history.push(`/game/${this.props.store.gameInstance.gameInstance.game_id}`)}
+                ></img>
+                <h1 
+                    onClick={() => this.props.history.push(`/game/${this.props.store.gameInstance.gameInstance.game_id}`)}
+                    >{this.props.store.gameInstance.gameInstance.name}
+                </h1>
                 <h3>{moment(this.props.store.gameInstance.gameInstance.date_played).format("MMM D, YYYY")}</h3>
                 <Typography>{this.props.store.gameInstance.gameInstance.creator_notes}</Typography>
                 <PlayerTable gameInstanceTable={true} isEditMode={this.state.isEditMode}/>
@@ -124,4 +135,4 @@ class GameInstancePage extends Component {
   }
 }
 
-export default connect(mapStoreToProps)(GameInstancePage);
+export default connect(mapStoreToProps)(withRouter(GameInstancePage));

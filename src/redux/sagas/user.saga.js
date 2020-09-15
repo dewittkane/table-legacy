@@ -34,6 +34,7 @@ function* searchUser( action ) {
     console.log('User search request failed', error);
   }
 }
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('SEARCH_USER', searchUser);

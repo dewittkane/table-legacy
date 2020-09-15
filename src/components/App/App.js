@@ -18,6 +18,8 @@ import LoginPage from '../Pages/LoginPage/LoginPage';
 import RegisterPage from '../Pages/RegisterPage/RegisterPage';
 import LogAGamePage from '../Pages/LogAGamePage/LogAGamePage';
 import GameInstancePage from '../Pages/GameInstancePage/GameInstancePage';
+import UserPage from '../Pages/UserPage/UserPage';
+import GamePage from '../Pages/GamePage/GamePage';
 
 import './App.css';
 
@@ -56,6 +58,18 @@ class App extends Component {
               exact
               path="/gameDetails/:gameInstanceId"
               component={GameInstancePage}
+            />
+
+            <ProtectedRoute 
+              exact
+              path="/user/:usersId"
+              component={UserPage}
+            />
+
+            <ProtectedRoute 
+              exact
+              path="/game/:gameId"
+              component={GamePage}
             />
 
             {/* When a value is supplied for the authRedirect prop the user will

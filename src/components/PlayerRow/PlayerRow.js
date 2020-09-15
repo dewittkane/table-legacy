@@ -25,9 +25,13 @@ class PlayerRow extends Component {
             <TableCell>
               <Delete onClick={this.removePlayer}/>
             </TableCell>
+            {/* will display username if they have one, other wise it will be just their name */}
             <TableCell>{this.props.player.username || this.props.player.players_name}</TableCell>
             <TableCell>
-              <TextField value={this.props.player.score} onChange={(event) => this.props.dispatch({ type: 'EDIT_SCORE', payload: { index: this.props.index, score: event.target.value } })} />
+              <TextField 
+                value={this.props.player.score} 
+                onChange={(event) => this.props.dispatch({ type: 'EDIT_SCORE', payload: { index: this.props.index, score: event.target.value } })}
+              />
             </TableCell>
             <TableCell align="center">
               <Checkbox onChange={this.toggleWin} checked={this.props.player.is_winner} />
@@ -36,13 +40,23 @@ class PlayerRow extends Component {
           :
           <TableRow>
             <TableCell>
-              <Typography>{this.props.player.username || this.props.player.players_name}</Typography>
+              {/* if player is a registered user, clicking on their name will link you to their user page */}
+              {this.props.player.username ?
+                <Typography
+                  onClick={() => this.props.history.push(`/user/${this.props.player.users_id}/`)}
+                  >{this.props.player.username}
+                </Typography>
+                :
+                <Typography>
+                  {this.props.player.players_name}
+                </Typography>
+              }
             </TableCell>
             <TableCell>
               <Typography>{this.props.player.score}</Typography>
             </TableCell>
             <TableCell align="center">
-              <Checkbox disabled checked={this.props.player.is_winner} />
+              {this.props.player.is_winner && <img alt="victory icon!" src="./images/trophyIcon.svg"></img>}
             </TableCell>
           </TableRow>
         }

@@ -44,6 +44,18 @@ function* getYourGames(){
       }
 }
 
+function* getYourGamesOf(action){
+    try {
+        let response = yield axios
+            .get(`/api/games/myGames`)
+        console.log(response.data);
+        yield put({ type: 'SET_GAMES', payload: response.data })
+
+    } catch (error) {
+        console.log('Error with getting your games:', error);
+      }
+}
+
 function* deleteGame(action){
     try {
         yield axios.delete(`/api/games/${action.payload}`)

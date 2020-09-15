@@ -116,6 +116,64 @@ router.get('/myGamesAgainst/:id', async (req, res) => {
         client.release()
     }
   });
+// gets the users game instances of the selected game
+router.get('/myGamesOf/:gameId', async (req, res) => {
+    const client = await pool.connect();
+
+    try{
+        const users_id = req.user.id
+        const game_id = req.params.gameId
+        const firstQueryText = `SELECT game_instance.id FROM "game_instance"
+            FULL JOIN "game" ON game_instance.game_id = game.id
+            FULL JOIN "players" ON game_instance.id = players.game_instance_id
+            FULL JOIN "user" ON players.users_id = "user".id
+            WHERE "players".users_id IN ($1, $2)
+            GROUP BY game_instance.id HAVING count("players".users_id) = 2
+            ORDER BY "game_instance".date_played DESC;`
+
+        await client.query('BEGIN')
+        const gameSelectResults = await client.query(firstQueryText, [users_id, requested_id]);
+        const gameInstanceIds = gameSelectResults.rows
+        console.log(gameInstanceIds);
+
+        const results = await Promise.all(gameInstanceIds.map(gameInstance => {
+            const queryText = `SELECT * FROM "game" 
+            FULL JOIN "game_instance" ON game.id = game_instance.game_id
+            FULL JOIN "players" ON game_instance.id = players.game_instance_id
+            FULL JOIN "user" ON players.users_id = "user".id
+            WHERE "game_instance".id = $1`
+
+            return client.query(queryText, [gameInstance.id])
+        }))
+        //results is an array, each index is a different array that has rows with a game instance in it
+        //loop of results at each index, each has .rows (spread)        
+        const games = results.map( result => {
+            const gameInstance = result.rows[0]
+            const players = []
+            result.rows.map(user => {
+                players.push({
+                    users_id: user.users_id,
+                    username: user.username,
+                    players_name: user.players_name,
+                    score: user.score,
+                    is_winner: user.is_winner
+                })
+            })
+            return {gameInstance, players}
+        })
+        
+        await client.query('COMMIT')
+        res.send(games)
+    
+
+    } catch {
+        await client.query('ROLLBACK')
+        console.log('Error GET /api/game', error);
+        res.sendStatus(500);
+    } finally {
+        client.release()
+    }
+  });
 // gets the selected game instance
 router.get('/gameInstance/:gameInstanceId', (req, res) => {
     const queryText = `SELECT * FROM "game" 
