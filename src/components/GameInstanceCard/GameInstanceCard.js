@@ -7,13 +7,13 @@ import { withRouter } from 'react-router-dom';
 
 class GameInstanceCard extends Component {
 
-  handleClick = () => {    
+  getDetails = () => {    
     this.props.history.push(`/gameDetails/${this.props.game.gameInstance.game_instance_id}`)
   }
   render() {
     return (
           <Card>
-            <CardActionArea onClick={this.handleClick}>
+            <CardActionArea onClick={this.getDetails}>
               <CardHeader
                 title={this.props.game.gameInstance.name}
                 subheader={moment(this.props.game.gameInstance.date_played).format("MMM D, YYYY")}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Card, Grid, Modal, Paper, TextField } from '@material-ui/core';
+import { Button, Card, CardActionArea, CardHeader, CardMedia, Grid, Modal, Paper, TextField } from '@material-ui/core';
 import GameSearchModal from '../GameSearchModal/GameSearchModal';
 
 class GameSelectModal extends Component {
@@ -51,10 +51,12 @@ class GameSelectModal extends Component {
                         />
                         <Grid container spacing={2}>
                             {this.props.store.gameSearch && this.props.store.gameSearch.map(game => (
-                                <Grid key={game.id} item xs={3}>
-                                    <Card onClick={() => this.handleChooseGame(game)} >
-                                        <img src={game.image_url} alt={game.name}></img>
-                                        <p>{game.name}</p>
+                                <Grid key={game.id} item xs={6}>
+                                    <Card >
+                                        <CardActionArea onClick={() => this.handleChooseGame(game)}>
+                                            <CardHeader title={game.name} />
+                                            <CardMedia src={game.image_url} alt={game.name} height={150} component="img"/>
+                                        </CardActionArea>
                                     </Card>
                                 </Grid>
                             ))}
