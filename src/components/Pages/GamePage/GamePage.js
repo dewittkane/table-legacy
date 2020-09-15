@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom'
 import GameInstanceCard from '../../GameInstanceCard/GameInstanceCard';
-import { Button, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 class GamePage extends Component {
 
@@ -20,7 +20,7 @@ class GamePage extends Component {
         alignItems="center"
       >
         <Grid item xs={12}>
-          <h1 id="welcome">Welcome, {this.props.store.user.username}!</h1>
+          <h1>Your Games of {this.props.store.games[0] && this.props.store.games[0].gameInstance.name}!</h1>
         </Grid>
 
         <Grid container spacing={3}>

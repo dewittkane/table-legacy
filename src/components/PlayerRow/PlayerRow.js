@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { Checkbox, TableRow, TableCell, TextField, Typography } from '@material-ui/core';
-import { Delete } from '@material-ui/icons'
+import { Delete } from '@material-ui/icons';
+import { withRouter } from 'react-router-dom';
 
 // Basic class component structure for React with default state
 // value setup. When making a new component be sure to replace
@@ -65,4 +66,4 @@ class PlayerRow extends Component {
   }
 }
 
-export default connect(mapStoreToProps)(PlayerRow);
+export default connect(mapStoreToProps)(withRouter(PlayerRow));

@@ -57,4 +57,16 @@ router.get('/search/:queryString', (req, res) => {
     })
 })
 
+router.get('/details/:usersId', (req, res) => {
+  const queryText = `SELECT id, username FROM "user" WHERE id = $1`
+
+  pool.query(queryText, [req.params.usersId])
+      .then(response => {
+        res.send(response.rows[0])
+      }
+    ).catch(error => {
+      console.log('Error in focus:', error);    
+    })
+})
+
 module.exports = router;

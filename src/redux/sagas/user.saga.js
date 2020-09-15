@@ -35,9 +35,21 @@ function* searchUser( action ) {
   }
 }
 
+function* focusUser( action ) {
+  try {
+    const results = yield axios.get(`/api/user/details/${action.payload}`)
+
+    yield put({type: 'SET_FOCUSED_USER', payload: results.data})
+
+  } catch (error) {
+    console.log('User focus request failed', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('SEARCH_USER', searchUser);
+  yield takeLatest('FOCUS_USER', focusUser);
 }
 
 export default userSaga;

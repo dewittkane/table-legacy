@@ -127,12 +127,11 @@ router.get('/myGamesOf/:gameId', async (req, res) => {
             FULL JOIN "game" ON game_instance.game_id = game.id
             FULL JOIN "players" ON game_instance.id = players.game_instance_id
             FULL JOIN "user" ON players.users_id = "user".id
-            WHERE "players".users_id IN ($1, $2)
-            GROUP BY game_instance.id HAVING count("players".users_id) = 2
+            WHERE "players".users_id = $1 AND game_instance.game_id = $2
             ORDER BY "game_instance".date_played DESC;`
 
         await client.query('BEGIN')
-        const gameSelectResults = await client.query(firstQueryText, [users_id, requested_id]);
+        const gameSelectResults = await client.query(firstQueryText, [users_id, game_id]);
         const gameInstanceIds = gameSelectResults.rows
         console.log(gameInstanceIds);
 

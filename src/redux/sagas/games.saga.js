@@ -26,6 +26,8 @@ function* getTheirGames(action){
 
         yield put({ type: 'SET_GAMES', payload: response.data })
 
+        yield put({ type: 'FOCUS_USER', payload: action.payload})
+
 
     } catch (error) {
         console.log('Error with getting their games:', error);
@@ -47,12 +49,12 @@ function* getYourGames(){
 function* getYourGamesOf(action){
     try {
         let response = yield axios
-            .get(`/api/games/myGames`)
+            .get(`/api/games/myGamesOf/${action.payload}`)
         console.log(response.data);
         yield put({ type: 'SET_GAMES', payload: response.data })
 
     } catch (error) {
-        console.log('Error with getting your games:', error);
+        console.log('Error with getting your games of this particular game:', error);
       }
 }
 
@@ -85,6 +87,7 @@ function* logSaga() {
     yield takeLatest('LOG_GAME', logGame);
     yield takeLatest('GET_THEIR_GAMES', getTheirGames);
     yield takeLatest('GET_YOUR_GAMES', getYourGames);
+    yield takeLatest('GET_YOUR_GAMES_OF', getYourGamesOf);
     yield takeLatest('DELETE_GAME', deleteGame);
     yield takeLatest('EDIT_GAME', editGame);
   }

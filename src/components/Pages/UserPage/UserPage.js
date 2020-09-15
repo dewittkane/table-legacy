@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom'
 import GameInstanceCard from '../../GameInstanceCard/GameInstanceCard';
-import { Button, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 class UserPage extends Component {
 
   componentDidMount = () => {
-    this.props.dispatch({type: 'GET_THEIR_GAMES', payload: this.props.match.params.userId })
+    this.props.dispatch({type: 'GET_THEIR_GAMES', payload: this.props.match.params.usersId })
   }
 
   render() {
@@ -20,7 +20,8 @@ class UserPage extends Component {
         alignItems="center"
       >
         <Grid item xs={12}>
-          <h1 id="welcome">Welcome, {this.props.store.user.username}!</h1>
+            <h5>Games you've played with</h5>
+            <h1>{this.props.store.focusedUser.username}</h1>
         </Grid>
 
         <Grid container spacing={3}>

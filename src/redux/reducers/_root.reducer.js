@@ -7,6 +7,7 @@ import logAGame from './logAGame.reducer';
 import games from './games.reducer';
 import gameInstance from './gameInstance.reducer';
 import userSearch from './userSearch.reducer';
+import focusedUser from './focusedUser.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   logAGame,
   games,
   gameInstance,
-  userSearch
+  userSearch,
+  focusedUser
 });
 
 export default rootReducer;
