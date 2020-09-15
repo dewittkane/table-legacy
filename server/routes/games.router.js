@@ -303,8 +303,12 @@ router.put('/:gameInstanceId', async (req, res) => {
 })
 
 router.post('/addNewGameToDb', (req, res) => {
+    //this query tries to insert a new game to the database.  If it already exists,
+    //it will update it with any new info from the API.
     const queryText = `INSERT INTO "game" ("bgaId", "name", "image_url", "url")
-    VALUES ($1, $2, $3, $4) RETURNING *`
+    VALUES ($1, $2, $3, $4) 
+    ON CONFLICT ("bgaId") DO UPDATE 
+    SET ("bgaId", "name", "image_url", "url") = ($1, $2, $3, $4)  RETURNING * ;`
     const queryValues = [req.body.id, req.body.name, req.body.images.small, req.body.url]
     pool.query(queryText, queryValues)
         .then(response => {
