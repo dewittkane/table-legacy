@@ -302,6 +302,7 @@ router.put('/:gameInstanceId', async (req, res) => {
     }
 })
 
+//posts a new game to the database from the api
 router.post('/addNewGameToDb', (req, res) => {
     //this query tries to insert a new game to the database.  If it already exists,
     //it will update it with any new info from the API.
@@ -319,6 +320,7 @@ router.post('/addNewGameToDb', (req, res) => {
         })
 })
 
+//initial post request that added lots of datapoints to the database
 router.post('/updateDatabase', async (req, res) => {
     //Calling sql and not hanging up
     const client = await pool.connect();
@@ -364,4 +366,5 @@ router.get('/search/:queryString', (req, res) => {
         console.log('Error in search:', error);    
       })
   })
+
 module.exports = router;

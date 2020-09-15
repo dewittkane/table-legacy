@@ -2,6 +2,8 @@ const gameSearchReducer = (state = [], action) => {
     switch (action.type) {
       case 'SET_GAME_SEARCH':
         return action.payload;
+      case 'RESET_GAME_SEARCHS':
+        return [];
       default:
         return state;
     }

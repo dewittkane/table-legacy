@@ -20,6 +20,8 @@ class LogAGamePage extends Component {
     this.setState({
       gameSelectMode: !this.state.gameSelectMode
     })
+    
+    this.props.dispatch({ type: 'RESET_GAME_SEARCHS' })
   }
 
   componentDidMount(){
@@ -66,6 +68,11 @@ class LogAGamePage extends Component {
         <>
         <img src={this.props.store.logAGame.image_url} alt={this.props.store.logAGame.name}/>
         <h1>{this.props.store.logAGame.name}</h1>
+        <Button
+          onClick={this.toggleGameSelectMode}
+          variant='contained'>
+          Choose a different game
+        </Button>
         </>
         :
         <Button

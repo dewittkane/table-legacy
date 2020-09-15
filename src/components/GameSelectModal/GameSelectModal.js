@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Modal, Paper, TextField } from '@material-ui/core';
+import { Button, Card, Grid, Modal, Paper, TextField } from '@material-ui/core';
 import GameSearchModal from '../GameSearchModal/GameSearchModal';
 
 class GameSelectModal extends Component {
@@ -49,12 +49,17 @@ class GameSelectModal extends Component {
                             onChange={this.searchGame}
                             variant='outlined'
                         />
-                        {this.props.store.gameSearch && this.props.store.gameSearch.map(game => (
-                            <>
-                                <img src={game.image_url} alt={game.name}></img>
-                                <p key={game.id} onClick={() => this.handleChooseGame(game)}>{game.name}</p>
-                            </>
-                        ))}
+                        <Grid container spacing={2}>
+                            {this.props.store.gameSearch && this.props.store.gameSearch.map(game => (
+                                <Grid key={game.id} item xs={3}>
+                                    <Card onClick={() => this.handleChooseGame(game)} >
+                                        <img src={game.image_url} alt={game.name}></img>
+                                        <p>{game.name}</p>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+
                         <h3>Not finding what you want? Trying adding the game to our list!</h3>
                         <Button
                             variant='contained'

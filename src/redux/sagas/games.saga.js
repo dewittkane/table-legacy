@@ -84,11 +84,10 @@ function* editGame(action){
 
 function* addGameToDb( action ) {
     try {
+        //caches the api data entry into our database
         const newGame = yield axios.post(`/api/games/addNewGameToDb`, action.payload)
-
+        //immediately puts the added game as the game to be logged
         yield put({type: 'SET_GAME', payload: newGame.data})
-
-        
 
     } catch (error) {
         console.log('Error with editing game:', error);
