@@ -5,14 +5,14 @@ import { Button, Modal, Paper, TextField } from '@material-ui/core';
 
 class GameSearchModal extends Component {
   handleChooseGame = (game) => {
-    // this.props.dispatch({ type: 'ADD_PLAYER', payload: {...user, is_winner: false, score: ''}});
     console.log('Choosing this game:', game);
-    this.props.dispatch({ type: 'SET_GAME', payload: game})
-    this.props.toggleGameSearchMode();
+    this.props.dispatch({ type: 'ADD_GAME_TO_DB', payload: game})
+    this.props.toggleApiSearchMode();
+    this.props.toggleGameSelectMode();
     }
 
-  searchGame = (event) => {
-    this.props.dispatch({type: 'SEARCH_GAME', payload: event.target.value})
+  searchApi = (event) => {
+    this.props.dispatch({type: 'SEARCH_API', payload: event.target.value})
     }
 
 
@@ -25,21 +25,15 @@ class GameSearchModal extends Component {
             <Paper>
                 <h3>Search for your favorite game:</h3>
                 <TextField
-                    onChange={this.searchGame}
+                    onChange={this.searchApi}
                     variant='outlined'
                 />
-                {this.props.store.gameSearch && this.props.store.gameSearch.map(game => (
+                {this.props.store.apiSearch && this.props.store.apiSearch.map(game => (
                     <>
-                        <img src={game.image_url} alt={game.name}></img>
+                        <img src={game.images.thumb} alt={game.name}></img>
                         <p key={game.id} onClick={() => this.handleChooseGame(game)}>{game.name}</p>
                     </>
                 ))}
-                <h3>Not finding what you want? Trying adding the game to our list!</h3>
-                {/* <TextField
-                    onChange={this.handleChangeFor('players_name')} 
-                    value={this.state.players_name}
-                    variant='outlined'
-                /> */}
                 <div>
                     <Button 
                         variant='contained'

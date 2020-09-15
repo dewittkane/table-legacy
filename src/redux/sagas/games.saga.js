@@ -82,6 +82,19 @@ function* editGame(action){
       }
 }
 
+function* addGameToDb( action ) {
+    try {
+        const newGame = yield axios.post(`/api/games/addNewGameToDb`, action.payload)
+
+        yield put({type: 'SET_GAME', payload: newGame.data})
+
+        
+
+    } catch (error) {
+        console.log('Error with editing game:', error);
+      }
+}
+
 
 function* logSaga() {
     yield takeLatest('LOG_GAME', logGame);
@@ -90,6 +103,7 @@ function* logSaga() {
     yield takeLatest('GET_YOUR_GAMES_OF', getYourGamesOf);
     yield takeLatest('DELETE_GAME', deleteGame);
     yield takeLatest('EDIT_GAME', editGame);
+    yield takeLatest('ADD_GAME_TO_DB', addGameToDb);
   }
   
   export default logSaga;

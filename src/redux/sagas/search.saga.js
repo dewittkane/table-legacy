@@ -11,11 +11,11 @@ function* searchApi(action){
                 https://api.boardgameatlas.com/api/search?name=${action.payload}&limit=5&fuzzy_match=true&client_id=${apiKey}`
             )
 
-        yield put({ type: 'SET_SEARCH', payload: response.data.games })
+        yield put({ type: 'SET_API_SEARCH', payload: response.data.games })
 
 
     } catch (error) {
-        console.log('Error with search:', error);
+        console.log('Error with API search:', error);
       }
 }
 
@@ -44,7 +44,7 @@ function* searchGames( action ) {
 // }
 
 function* searchSaga() {
-    yield takeLatest('SEARCH', searchApi);
+    yield takeLatest('SEARCH_API', searchApi);
     yield takeLatest('SEARCH_GAME', searchGames);
     // yield takeLatest('UPDATE_DB', updateDB)
   }

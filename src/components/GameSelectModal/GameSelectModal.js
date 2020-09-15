@@ -13,6 +13,7 @@ class GameSelectModal extends Component {
 
     //selects the game stores its information in a reducer
     handleChooseGame = (game) => {
+        console.log('Choosing this game:', game);
         this.props.dispatch({ type: 'SET_GAME', payload: game })
         this.props.toggleGameSelectMode();
     };
@@ -35,6 +36,7 @@ class GameSelectModal extends Component {
                 {/* API search modal that appears when user clicks "can't find the game" */}
                 <GameSearchModal 
                     toggleApiSearchMode={this.toggleApiSearchMode}
+                    toggleGameSelectMode={this.props.toggleGameSelectMode}
                     apiSearchMode={this.state.apiSearchMode}
                 />
                 <Modal
@@ -53,7 +55,12 @@ class GameSelectModal extends Component {
                                 <p key={game.id} onClick={() => this.handleChooseGame(game)}>{game.name}</p>
                             </>
                         ))}
-                        <h3 onClick={this.toggleApiSearchMode}>Not finding what you want? Trying adding the game to our list!</h3>
+                        <h3>Not finding what you want? Trying adding the game to our list!</h3>
+                        <Button
+                            variant='contained'
+                            onClick={this.toggleApiSearchMode}>
+                            Find a different game!
+                        </Button>
                         <div>
                             <Button
                                 variant='contained'

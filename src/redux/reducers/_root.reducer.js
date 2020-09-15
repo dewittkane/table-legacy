@@ -8,6 +8,7 @@ import games from './games.reducer';
 import gameInstance from './gameInstance.reducer';
 import userSearch from './userSearch.reducer';
 import focusedUser from './focusedUser.reducer';
+import apiSearch from './apiSearch.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   games,
   gameInstance,
   userSearch,
-  focusedUser
+  focusedUser,
+  apiSearch
 });
 
 export default rootReducer;

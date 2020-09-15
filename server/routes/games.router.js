@@ -302,6 +302,19 @@ router.put('/:gameInstanceId', async (req, res) => {
     }
 })
 
+router.post('/addNewGameToDb', (req, res) => {
+    const queryText = `INSERT INTO "game" ("bgaId", "name", "image_url", "url")
+    VALUES ($1, $2, $3, $4) RETURNING *`
+    const queryValues = [req.body.id, req.body.name, req.body.images.small, req.body.url]
+    pool.query(queryText, queryValues)
+        .then(response => {
+            res.send(response.rows[0])
+        }).catch(error => {
+            console.log('error posting game to database:', error);
+            res.sendStatus(500)            
+        })
+})
+
 router.post('/updateDatabase', async (req, res) => {
     //Calling sql and not hanging up
     const client = await pool.connect();
