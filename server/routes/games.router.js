@@ -1,9 +1,12 @@
 const express = require('express');
+const {
+    rejectUnauthenticated,
+  } = require('../modules/authentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
 // gets the game instances that the logged in user has played
-router.get('/myGames', async (req, res) => {
+router.get('/myGames', rejectUnauthenticated, async (req, res) => {
     const client = await pool.connect();
 
     try{
@@ -59,7 +62,7 @@ router.get('/myGames', async (req, res) => {
     }
   });
 // gets the game instances that both the logged in user and selected user have played
-router.get('/myGamesAgainst/:id', async (req, res) => {
+router.get('/myGamesAgainst/:id', rejectUnauthenticated, async (req, res) => {
     const client = await pool.connect();
 
     try{
@@ -117,7 +120,7 @@ router.get('/myGamesAgainst/:id', async (req, res) => {
     }
   });
 // gets the users game instances of the selected game
-router.get('/myGamesOf/:gameId', async (req, res) => {
+router.get('/myGamesOf/:gameId', rejectUnauthenticated, async (req, res) => {
     const client = await pool.connect();
 
     try{
@@ -174,7 +177,7 @@ router.get('/myGamesOf/:gameId', async (req, res) => {
     }
   });
 // gets the selected game instance
-router.get('/gameInstance/:gameInstanceId', (req, res) => {
+router.get('/gameInstance/:gameInstanceId', rejectUnauthenticated, (req, res) => {
     const queryText = `SELECT * FROM "game" 
     FULL JOIN "game_instance" ON game.id = game_instance.game_id
     FULL JOIN "players" ON game_instance.id = players.game_instance_id
@@ -203,7 +206,7 @@ router.get('/gameInstance/:gameInstanceId', (req, res) => {
         })
   });
 
-router.post('/', async (req, res) => {
+router.post('/', rejectUnauthenticated, async (req, res) => {
     //Calling sql and not hanging up
     const client = await pool.connect();
     console.log(req.body);
@@ -248,7 +251,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.delete('/:gameInstanceId', (req, res) => {
+router.delete('/:gameInstanceId', rejectUnauthenticated, (req, res) => {
     const queryText = `DELETE FROM "game_instance" WHERE id = $1 AND creator_id = $2`
     pool.query(queryText, [req.params.gameInstanceId, req.user.id])
         .then(response => {
@@ -259,7 +262,7 @@ router.delete('/:gameInstanceId', (req, res) => {
         })
 })
 
-router.put('/:gameInstanceId', async (req, res) => {
+router.put('/:gameInstanceId', rejectUnauthenticated, async (req, res) => {
     const client = await pool.connect();
     console.log(req.body);
     
@@ -303,7 +306,7 @@ router.put('/:gameInstanceId', async (req, res) => {
 })
 
 //posts a new game to the database from the api
-router.post('/addNewGameToDb', (req, res) => {
+router.post('/addNewGameToDb', rejectUnauthenticated, (req, res) => {
     //this query tries to insert a new game to the database.  If it already exists,
     //it will update it with any new info from the API.
     const queryText = `INSERT INTO "game" ("bgaId", "name", "image_url", "url")
@@ -321,7 +324,7 @@ router.post('/addNewGameToDb', (req, res) => {
 })
 
 //initial post request that added lots of datapoints to the database
-router.post('/updateDatabase', async (req, res) => {
+router.post('/updateDatabase', rejectUnauthenticated,async (req, res) => {
     //Calling sql and not hanging up
     const client = await pool.connect();
     console.log(req.body);
@@ -354,7 +357,7 @@ router.post('/updateDatabase', async (req, res) => {
     }
 });
 
-router.get('/search/:queryString', (req, res) => {
+router.get('/search/:queryString', rejectUnauthenticated, (req, res) => {
     const queryText = `SELECT * FROM "game" WHERE "name" ILIKE '%' || $1 || '%' LIMIT 5;`
     console.log(req.params.queryString);
     

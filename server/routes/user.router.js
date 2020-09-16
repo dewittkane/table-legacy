@@ -45,7 +45,7 @@ router.post('/logout', (req, res) => {
 });
 
 //Searchs the user list and returns the 5 closest matches to the string, excluding the user.
-router.get('/search/:queryString', (req, res) => {
+router.get('/search/:queryString', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT id, username FROM "user" WHERE "username" ILIKE '%' || $1 || '%' AND "id" != $2 LIMIT 5 ;`
   
   pool.query(queryText, [req.params.queryString, req.user.id])
@@ -57,7 +57,7 @@ router.get('/search/:queryString', (req, res) => {
     })
 })
 
-router.get('/details/:usersId', (req, res) => {
+router.get('/details/:usersId', rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT id, username FROM "user" WHERE id = $1`
 
   pool.query(queryText, [req.params.usersId])
