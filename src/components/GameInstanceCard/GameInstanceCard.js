@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Card, CardActionArea, CardHeader, CardContent, Grid } from '@material-ui/core';
+import { Card, CardActionArea, CardHeader, CardContent, CardMedia, Typography, Grid } from '@material-ui/core';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 
@@ -34,6 +34,39 @@ class GameInstanceCard extends Component {
               </CardContent>
             </CardActionArea>
           </Card>
+
+
+
+
+
+
+// {/* <Card style={{display: "flex", justifyContent: "spaceBetween"}}>
+//       <div >
+//         <CardContent >
+//           <Typography component="h5" variant="h5">
+//           {this.props.game.gameInstance.name}
+//           </Typography>
+//           <Typography variant="subtitle1" color="textSecondary">
+//           {moment(this.props.game.gameInstance.date_played).format("MMM D, YYYY")}
+//           </Typography>
+//         </CardContent>
+//         <div >
+//           <ul>
+//             {this.props.game.players.map((player, i) => (
+//               <li key={i}>{player.username ? player.username : player.players_name}: {player.score}</li>
+//             ))}
+//           </ul>
+//         </div>
+//       </div>
+//       <img width="150" src={this.props.game.gameInstance.image_url} alt={this.props.game.gameInstance.name}></img>
+//       <CardMedia
+//           height="150"
+//           width="150"
+//           component="img"
+//           src={this.props.game.gameInstance.image_url}
+//           title="Live from space album cover"
+//       />
+//     </Card> */}
       // <Grid item xs={12} md={6}>
       //   <Card >
       //     <Grid 

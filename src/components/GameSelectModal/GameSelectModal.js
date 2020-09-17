@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Card, CardActionArea, CardHeader, CardMedia, Grid, Modal, Paper, TextField } from '@material-ui/core';
+import { Button, Card, CardActionArea, CardHeader, CardMedia, Container, Grid, Modal, Paper, TextField } from '@material-ui/core';
 import GameSearchModal from '../GameSearchModal/GameSearchModal';
 
 class GameSelectModal extends Component {
@@ -40,22 +40,25 @@ class GameSelectModal extends Component {
                     apiSearchMode={this.state.apiSearchMode}
                 />
                 <Modal
+                    disableScrollLock={true}
                     open={this.props.gameSelectMode}
                     onClose={this.props.toggleGameSelectMode}
                 >
+                    <Container fixed>
                     <Paper>
                         <h3>Search for your favorite game:</h3>
                         <TextField
                             onChange={this.searchGame}
                             variant='outlined'
                         />
+                        {/* Convert to gridlist */}
                         <Grid container spacing={2}>
                             {this.props.store.gameSearch && this.props.store.gameSearch.map(game => (
                                 <Grid key={game.id} item xs={6}>
                                     <Card >
                                         <CardActionArea onClick={() => this.handleChooseGame(game)}>
                                             <CardHeader title={game.name} />
-                                            <CardMedia src={game.image_url} alt={game.name} height={150} component="img"/>
+                                            <CardMedia src={game.image_url} alt={game.name} height={".25vh"} component="img"/>
                                         </CardActionArea>
                                     </Card>
                                 </Grid>
@@ -76,6 +79,7 @@ class GameSelectModal extends Component {
                         </Button>
                         </div>
                     </Paper>
+                    </Container>
                 </Modal>
             </>
         );

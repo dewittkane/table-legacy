@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
 import moment from 'moment';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, Container, Grid, TextField, Typography } from '@material-ui/core';
 import PlayerTable from '../../PlayerTable/PlayerTable';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
@@ -15,6 +15,7 @@ class GameInstancePage extends Component {
 
     componentDidMount(){
         this.props.dispatch({type: 'GET_GAME_INSTANCE', payload: this.props.match.params.gameInstanceId})
+        console.log(this.props.match)
     }
 
     turnToEditMode = () => {
@@ -57,27 +58,33 @@ class GameInstancePage extends Component {
         {this.state.isEditMode
         
         ?  
-            <div>
-                <img src={this.props.store.gameInstance.gameInstance.image_url} alt={this.props.store.gameInstance.gameInstance.name}></img>
-                <h1>{this.props.store.gameInstance.gameInstance.name}</h1>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <DatePicker 
-                        disableToolbar
-                        value={this.props.store.logAGame.date_played}
-                        onChange={(date) => this.props.dispatch({type: 'SET_DATE', payload: date})}
-                        label='Date Played'
-                        format='dddd, L'
+        <Container fixed>
+            <Grid container>
+                <Grid item xs={12}>
+                    <img src={this.props.store.gameInstance.gameInstance.image_url} alt={this.props.store.gameInstance.gameInstance.name}></img>
+
+                    <h1>{this.props.store.gameInstance.gameInstance.name}</h1>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <DatePicker 
+                            disableToolbar
+                            value={this.props.store.logAGame.date_played}
+                            onChange={(date) => this.props.dispatch({type: 'SET_DATE', payload: date})}
+                            label='Date Played'
+                            format='dddd, L'
+                        />
+                    </MuiPickersUtilsProvider>
+                    <TextField 
+                        multiline
+                        value={this.props.store.logAGame.creator_notes || ''}
+                        onChange={(event) => this.props.dispatch({type: 'SET_NOTE', payload: event.target.value})}
+                        rows={4}
+                        variant='filled'
+                        label='Notes?'
                     />
-                </MuiPickersUtilsProvider>
-                <TextField 
-                    multiline
-                    value={this.props.store.logAGame.creator_notes || ''}
-                    onChange={(event) => this.props.dispatch({type: 'SET_NOTE', payload: event.target.value})}
-                    rows={4}
-                    variant='filled'
-                    label='Notes?'
-                />
-                <PlayerTable gameInstanceTable={true} isEditMode={this.state.isEditMode}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <PlayerTable gameInstanceTable={true} isEditMode={this.state.isEditMode}/>
+                </Grid>
                     <h3>Game Creator Options:</h3>
                     <Button
                         onClick={this.submitEdits}
@@ -96,21 +103,29 @@ class GameInstancePage extends Component {
                             >Delete Game
                         </Button>
                     </div>
-            </div>
+            </Grid>
+        </Container>
         :
-            <div>
-                <img 
-                    src={this.props.store.gameInstance.gameInstance.image_url} 
-                    alt={this.props.store.gameInstance.gameInstance.name}
-                    onClick={() => this.props.history.push(`/game/${this.props.store.gameInstance.gameInstance.game_id}`)}
-                ></img>
-                <h1 
-                    onClick={() => this.props.history.push(`/game/${this.props.store.gameInstance.gameInstance.game_id}`)}
-                    >{this.props.store.gameInstance.gameInstance.name}
-                </h1>
-                <h3>{moment(this.props.store.gameInstance.gameInstance.date_played).format("MMM D, YYYY")}</h3>
-                <Typography>{this.props.store.gameInstance.gameInstance.creator_notes}</Typography>
-                <PlayerTable gameInstanceTable={true} isEditMode={this.state.isEditMode}/>
+        <Container fixed >
+            <Grid container spacing={3}>
+                <Grid item xs={12} md={4}>
+                    <img 
+                        src={this.props.store.gameInstance.gameInstance.image_url} 
+                        alt={this.props.store.gameInstance.gameInstance.name}
+                        onClick={() => this.props.history.push(`/game/${this.props.store.gameInstance.gameInstance.game_id}`)}
+                    ></img>
+                </Grid>
+                <Grid item xs={8}>
+                    <h1 
+                        onClick={() => this.props.history.push(`/game/${this.props.store.gameInstance.gameInstance.game_id}`)}
+                        >{this.props.store.gameInstance.gameInstance.name}
+                    </h1>
+                    <h3>{moment(this.props.store.gameInstance.gameInstance.date_played).format("MMM D, YYYY")}</h3>
+                    <Typography>{this.props.store.gameInstance.gameInstance.creator_notes}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <PlayerTable gameInstanceTable={true} isEditMode={this.state.isEditMode}/>
+                </Grid>
                 {this.props.store.gameInstance.gameInstance.creator_id === this.props.store.user.id && 
                     <div>
                     <h3>Game Creator Options:</h3> 
@@ -127,7 +142,8 @@ class GameInstancePage extends Component {
                         </Button>
                     </div>
                 </div>}
-                </div>
+            </Grid>
+        </Container>
             }     
         </>}
         </>

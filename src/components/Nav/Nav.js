@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import { AppBar, Button, IconButton, Toolbar } from '@material-ui/core'
 
 const Nav = (props) => {
   let loginLinkData = {
@@ -19,22 +20,28 @@ const Nav = (props) => {
 
   return (
     <div className="nav">
-      {<h2 className="nav-link" onClick={props.history.goBack}>Back</h2>}
-      <Link to="/home">
-        <h2 className="nav-title">Table Legacy</h2>
-      </Link>
-      <div className="nav-right">
-        <Link className="nav-link" to={loginLinkData.path}>
-          {/* Show this link if they are logged in or not,
-          but call this link 'Home' if they are logged in,
-          and call this link 'Login / Register' if they are not */}
-          {loginLinkData.text}
-        </Link>
-        {/* Show the logout button if the user is logged in */}
-        {props.store.user.id && (
-            <LogOutButton className="nav-link" />
-        )}
-      </div>
+      <AppBar position="static">
+        <Toolbar>
+          {props.match.url !== '/home' && <h2 className="nav-link" onClick={props.history.goBack}>Back</h2>}
+
+          <Link to="/home">
+            <h2 className="nav-title">Table Legacy</h2>
+          </Link>
+
+          <Button color="inherit" onClick={() => props.history.push(loginLinkData.path)}> 
+            {/* Show this link if they are logged in or not,
+            but call this link 'Home' if they are logged in,
+            and call this link 'Login / Register' if they are not */}
+            {loginLinkData.text}
+          </Button>
+
+          {/* Show the logout button if the user is logged in */}
+          {props.store.user.id && (
+              <LogOutButton className="nav-link" />
+          )}
+
+        </Toolbar>
+      </AppBar>
     </div>
   );
 };

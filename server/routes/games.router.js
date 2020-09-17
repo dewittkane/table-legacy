@@ -28,7 +28,8 @@ router.get('/myGames', rejectUnauthenticated, async (req, res) => {
             FULL JOIN "game_instance" ON game.id = game_instance.game_id
             FULL JOIN "players" ON game_instance.id = players.game_instance_id
             FULL JOIN "user" ON players.users_id = "user".id
-            WHERE "game_instance".id = $1`
+            WHERE "game_instance".id = $1
+            ORDER BY "players".score DESC;`
 
             return client.query(queryText, [gameInstance.id])
         }))
@@ -86,7 +87,8 @@ router.get('/myGamesAgainst/:id', rejectUnauthenticated, async (req, res) => {
             FULL JOIN "game_instance" ON game.id = game_instance.game_id
             FULL JOIN "players" ON game_instance.id = players.game_instance_id
             FULL JOIN "user" ON players.users_id = "user".id
-            WHERE "game_instance".id = $1`
+            WHERE "game_instance".id = $1
+            ORDER BY "players".score DESC;`
 
             return client.query(queryText, [gameInstance.id])
         }))
@@ -143,7 +145,8 @@ router.get('/myGamesOf/:gameId', rejectUnauthenticated, async (req, res) => {
             FULL JOIN "game_instance" ON game.id = game_instance.game_id
             FULL JOIN "players" ON game_instance.id = players.game_instance_id
             FULL JOIN "user" ON players.users_id = "user".id
-            WHERE "game_instance".id = $1`
+            WHERE "game_instance".id = $1
+            ORDER BY "players".score DESC;`
 
             return client.query(queryText, [gameInstance.id])
         }))
@@ -182,7 +185,8 @@ router.get('/gameInstance/:gameInstanceId', rejectUnauthenticated, (req, res) =>
     FULL JOIN "game_instance" ON game.id = game_instance.game_id
     FULL JOIN "players" ON game_instance.id = players.game_instance_id
     FULL JOIN "user" ON players.users_id = "user".id
-    WHERE "game_instance".id = $1`
+    WHERE "game_instance".id = $1
+    ORDER BY "players".score DESC;`
 
     pool.query(queryText, [req.params.gameInstanceId])
         .then(result => {
