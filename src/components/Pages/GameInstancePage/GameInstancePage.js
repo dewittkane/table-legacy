@@ -51,14 +51,14 @@ class GameInstancePage extends Component {
 
   render() {
     return (
-        <>
+        <Container fixed>
         {this.props.store.gameInstance.gameInstance &&
             <>
 
         {this.state.isEditMode
         
         ?  
-        <Container fixed>
+
             <Grid container>
                 <Grid item xs={12}>
                     <img src={this.props.store.gameInstance.gameInstance.image_url} alt={this.props.store.gameInstance.gameInstance.name}></img>
@@ -104,9 +104,8 @@ class GameInstancePage extends Component {
                         </Button>
                     </div>
             </Grid>
-        </Container>
+        
         :
-        <Container fixed >
             <Grid container spacing={3}>
                 <Grid item xs={12} md={4}>
                     <img 
@@ -143,10 +142,10 @@ class GameInstancePage extends Component {
                     </div>
                 </div>}
             </Grid>
-        </Container>
             }     
         </>}
-        </>
+        </Container>
+
     );
   }
 }

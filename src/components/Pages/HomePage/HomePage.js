@@ -14,7 +14,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <Container fixed>
+      <Container style={{ marginLeft: "10%" }} fixed>
         <Grid 
           container 
           spacing={3}
@@ -38,7 +38,7 @@ class HomePage extends Component {
           <Grid container spacing={3}> 
             {/* maps through all of your games and shows details for each one */}
             {this.props.store.games.map(game => (
-              <Grid item xs={12} md={6} lg={4} key={game.gameInstance.game_instance_id}>
+              <Grid item xs={12} md={6} key={game.gameInstance.game_instance_id}>
                 <GameInstanceCard game={game} />
               </Grid>
             ))}

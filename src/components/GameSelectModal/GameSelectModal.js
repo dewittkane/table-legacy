@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Card, CardActionArea, CardHeader, CardMedia, Container, Grid, Modal, Paper, TextField } from '@material-ui/core';
+import { Button, Card, CardActionArea, CardHeader, CardMedia, Container, Dialog, Grid, Modal, Paper, TextField } from '@material-ui/core';
 import GameSearchModal from '../GameSearchModal/GameSearchModal';
 
 class GameSelectModal extends Component {
@@ -39,13 +39,12 @@ class GameSelectModal extends Component {
                     toggleGameSelectMode={this.props.toggleGameSelectMode}
                     apiSearchMode={this.state.apiSearchMode}
                 />
-                <Modal
+                <Dialog
                     disableScrollLock={true}
                     open={this.props.gameSelectMode}
                     onClose={this.props.toggleGameSelectMode}
                 >
                     <Container fixed>
-                    <Paper>
                         <h3>Search for your favorite game:</h3>
                         <TextField
                             onChange={this.searchGame}
@@ -57,8 +56,8 @@ class GameSelectModal extends Component {
                                 <Grid key={game.id} item xs={6}>
                                     <Card >
                                         <CardActionArea onClick={() => this.handleChooseGame(game)}>
-                                            <CardHeader title={game.name} />
-                                            <CardMedia src={game.image_url} alt={game.name} height={".25vh"} component="img"/>
+                                            <img src={game.image_url} alt={game.name} component="img"></img>
+                                            <p>{game.name}</p>
                                         </CardActionArea>
                                     </Card>
                                 </Grid>
@@ -78,9 +77,8 @@ class GameSelectModal extends Component {
                             >Cancel
                         </Button>
                         </div>
-                    </Paper>
                     </Container>
-                </Modal>
+                </Dialog>
             </>
         );
     }

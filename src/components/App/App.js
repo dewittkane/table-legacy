@@ -21,7 +21,12 @@ import GameInstancePage from '../Pages/GameInstancePage/GameInstancePage';
 import UserPage from '../Pages/UserPage/UserPage';
 import GamePage from '../Pages/GamePage/GamePage';
 
+import makeStyles from '@material-ui/core';
 import './App.css';
+
+
+
+
 
 class App extends Component {
   componentDidMount() {

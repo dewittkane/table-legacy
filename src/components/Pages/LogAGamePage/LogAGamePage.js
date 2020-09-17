@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Container, TextField, Typography } from '@material-ui/core';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import PlayerTable from '../../PlayerTable/PlayerTable';
@@ -12,20 +12,20 @@ import GameSelectModal from '../../GameSelectModal/GameSelectModal';
 
 class LogAGamePage extends Component {
 
+  //toggles the game select Modal
   state = {
     gameSelectMode: false
   }
-
   toggleGameSelectMode = () => {
     this.setState({
       gameSelectMode: !this.state.gameSelectMode
     })
-    
+    //resets the search reducer anytime a new search is initiated
     this.props.dispatch({ type: 'RESET_GAME_SEARCHS' })
   }
 
   componentDidMount(){
-    //prepopulates the player table with 
+    //prepopulates the player table with the logged in user
     this.props.dispatch({ 
       type: 'SET_TABLE', 
       payload: [
@@ -62,12 +62,12 @@ class LogAGamePage extends Component {
   }
   render() {
     return (
-      <div>
+      <Container fixed>
         <h2>Log a Game</h2>
         {this.props.store.logAGame.name ?
         <>
         <img src={this.props.store.logAGame.image_url} alt={this.props.store.logAGame.name}/>
-        <h1>{this.props.store.logAGame.name}</h1>
+        <Typography variant="h1">{this.props.store.logAGame.name}</Typography>
         <Button
           onClick={this.toggleGameSelectMode}
           variant='contained'>
@@ -92,18 +92,22 @@ class LogAGamePage extends Component {
         />
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <DatePicker 
+            autoOk
+            disableFuture
             disableToolbar
             value={this.props.store.logAGame.date_played}
             onChange={(date) => this.props.dispatch({type: 'SET_DATE', payload: date})}
             label='Date Played'
             format='dddd, L'
+            variant="dialog"
+            inputVariant="outlined"
           />
         </MuiPickersUtilsProvider>
         <PlayerTable isEditMode={true}/>
         <Button 
           variant='contained'
           onClick={this.logGame}>Log your Legacy</Button>
-      </div>
+      </Container>
     );
   }
 }
