@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Modal, Paper, TextField } from '@material-ui/core';
+import { Button, Container, Dialog, Grid, Paper, TextField } from '@material-ui/core';
 
 class AddAPlayerModal extends Component {
   state = {
@@ -50,11 +50,12 @@ class AddAPlayerModal extends Component {
 
   render() {
     return (
-        <Modal
+        <Dialog
             open={this.props.addPlayerMode}
             onClose={this.props.togglePlayerMode}
         >
-            <Paper>
+            <Container>
+
                 <h3>Search for your friend if they have an account:</h3>
                 <TextField
                     onChange={this.searchUser}
@@ -62,7 +63,7 @@ class AddAPlayerModal extends Component {
                 />
                 <div>
                 {this.props.store.userSearch && this.props.store.userSearch.map(user => (
-                  <Button variant='contained' key={user.id} onClick={() => this.handleAddUser(user)}>{user.username}</Button>
+                  <Button style={{margin: "5px"}} variant='contained' key={user.id} onClick={() => this.handleAddUser(user)}>{user.username}</Button>
                 ))}
                 </div>
 
@@ -72,20 +73,22 @@ class AddAPlayerModal extends Component {
                     value={this.state.player.players_name}
                     variant='outlined'
                 />
-                <div>
-                    <Button
-                        variant='contained'
-                        onClick={this.handleAddPlayer}
-                        >Add Player
-                    </Button>
-                    <Button 
-                        variant='contained'
-                        onClick={this.props.togglePlayerMode}
-                        >Cancel
-                    </Button>
-                </div>
-            </Paper>
-        </Modal>
+                <Grid container justify="center">
+                  <Button
+                      style={{margin: "20px"}}
+                      variant='contained'
+                      onClick={this.handleAddPlayer}
+                      >Add Player
+                  </Button>
+                  <Button 
+                      style={{margin: "20px"}}
+                      variant='contained'
+                      onClick={this.props.togglePlayerMode}
+                      >Cancel
+                  </Button>
+                </Grid>
+            </Container>
+        </Dialog>
     );
   }
 }

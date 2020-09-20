@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom'
 import GameInstanceCard from '../../GameInstanceCard/GameInstanceCard';
-import { Card, CardActionArea, CardHeader, Container, Grid, Typography } from '@material-ui/core';
+import { Card, CardActionArea, CardHeader, Container, Grid, IconButton, Typography } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 
 class HomePage extends Component {
 
@@ -14,7 +15,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <Container style={{ marginLeft: "10%" }} fixed>
+      <Container fixed>
         <Grid 
           container 
           spacing={3}
@@ -22,7 +23,7 @@ class HomePage extends Component {
           alignItems="center"
         >
           <Grid item xs={6}>
-            <Typography id="welcome">Welcome, {this.props.store.user.username}!</Typography>
+            <Typography style={{color: "#ef8354", fontWeight: "bold"}}variant="h2">Welcome, {this.props.store.user.username}!</Typography>
           </Grid>
     
           <Grid item xs={6}>
@@ -31,6 +32,7 @@ class HomePage extends Component {
                 <CardHeader
                   title="Log a Game"
                   subheader="Click me!"
+                  action={<Add fontSize='large'/>}
                 />
               </CardActionArea>
             </Card>

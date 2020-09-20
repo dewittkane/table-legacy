@@ -362,7 +362,7 @@ router.post('/updateDatabase', rejectUnauthenticated,async (req, res) => {
 });
 
 router.get('/search/:queryString', rejectUnauthenticated, (req, res) => {
-    const queryText = `SELECT * FROM "game" WHERE "name" ILIKE '%' || $1 || '%' LIMIT 5;`
+    const queryText = `SELECT * FROM "game" WHERE "name" ILIKE '%' || $1 || '%' LIMIT 4;`
     console.log(req.params.queryString);
     
     pool.query(queryText, [req.params.queryString])

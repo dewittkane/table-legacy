@@ -36,7 +36,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div style={{backgroundColor: "#e5e6e4"}}>
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}

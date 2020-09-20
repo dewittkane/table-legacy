@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Card, CardActionArea, CardHeader, CardMedia, Container, Dialog, Grid, Modal, Paper, TextField } from '@material-ui/core';
+import { Button, Card, CardActionArea, CardHeader, CardMedia, Container, Dialog, Grid, MakeStyle, Modal, Paper, TextField, Typography } from '@material-ui/core';
 import GameSearchModal from '../GameSearchModal/GameSearchModal';
+import './GameSelectModal.css'
+
+// const useStyles = makeStyles({
+//     MUIButton: {
+//         margin: "10"
+//     }
+// })
 
 class GameSelectModal extends Component {
-
+    // classes = useStyles()
     //starting state for API search modal is off
     state = {
         apiSearchMode: false
@@ -45,38 +52,43 @@ class GameSelectModal extends Component {
                     onClose={this.props.toggleGameSelectMode}
                 >
                     <Container fixed>
-                        <h3>Search for your favorite game:</h3>
-                        <TextField
-                            onChange={this.searchGame}
-                            variant='outlined'
-                        />
-                        {/* Convert to gridlist */}
-                        <Grid container spacing={2}>
-                            {this.props.store.gameSearch && this.props.store.gameSearch.map(game => (
-                                <Grid key={game.id} item xs={6}>
-                                    <Card >
-                                        <CardActionArea onClick={() => this.handleChooseGame(game)}>
-                                            <img src={game.image_url} alt={game.name} component="img"></img>
-                                            <p>{game.name}</p>
-                                        </CardActionArea>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
+                        <Grid container justify="center">
+                            <Typography variant="h4">Search for your favorite game:</Typography>
+                            <TextField
+                                style={{ margin: "20px"}}
+                                onChange={this.searchGame}
+                                variant='outlined'
+                            />
+                            {/* Convert to gridlist */}
+                            <Grid container spacing={2}>
+                                {this.props.store.gameSearch && this.props.store.gameSearch.map(game => (
+                                    <Grid key={game.id} item alignItems="center">
+                                        <Card >
+                                            <CardActionArea onClick={() => this.handleChooseGame(game)}>
+                                                <img src={game.image_url} alt={game.name} component="img"></img>
+                                                <Typography display="block" variant="subtitle1">{game.name}</Typography>
+                                            </CardActionArea>
+                                        </Card>
+                                    </Grid>
+                                ))}
+                            </Grid>
 
-                        <h3>Not finding what you want? Trying adding the game to our list!</h3>
-                        <Button
-                            variant='contained'
-                            onClick={this.toggleApiSearchMode}>
-                            Find a different game!
-                        </Button>
-                        <div>
+                            <Typography variant="h5">Not finding the right game? Trying adding it to our list with the Board Game Atlas!</Typography>
+                            <Button 
+                                style= {{margin: 10}}
+                                className="MUIButton"
+                                variant='contained'
+                                onClick={this.toggleApiSearchMode}>
+                                Search Board Game Atlas!
+                            </Button>
                             <Button
+                                style= {{margin: 10}}
+                                className="MUIButton"
                                 variant='contained'
                                 onClick={this.props.toggleGameSelectMode}
-                            >Cancel
-                        </Button>
-                        </div>
+                                >Cancel
+                            </Button>
+                        </Grid>
                     </Container>
                 </Dialog>
             </>

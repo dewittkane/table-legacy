@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Card, CardActionArea, Container, Grid, Dialog, Paper, TextField } from '@material-ui/core';
+import { Button, Card, CardActionArea, Container, Grid, Dialog, Paper, TextField, Typography } from '@material-ui/core';
 
 class GameSearchModal extends Component {
   handleChooseGame = (game) => {
@@ -22,9 +22,10 @@ class GameSearchModal extends Component {
             open={this.props.apiSearchMode}
             onClose={this.props.toggleApiSearchMode}
         >
-            <Container>
-                <h3>Search for your favorite game:</h3>
+            <Container fixed>
+                <Typography variant="h4">Search the Board Game Atlas database:</Typography>
                 <TextField
+                    style={{margin: "20px"}}
                     onChange={this.searchApi}
                     variant='outlined'
                 />
@@ -34,7 +35,7 @@ class GameSearchModal extends Component {
                             <Card >
                                 <CardActionArea onClick={() => this.handleChooseGame(game)}>
                                     <img src={game.images.small} alt={game.name}></img>
-                                    <p>{game.name}</p>
+                                    <Typography variant="subtitle1">{game.name}</Typography>
                                 </CardActionArea>
                             </Card>
                         </Grid>

@@ -8,7 +8,7 @@ function* searchApi(action){
 
         let response = yield axios
             .get(`
-                https://api.boardgameatlas.com/api/search?name=${action.payload}&limit=5&fuzzy_match=true&client_id=${apiKey}`
+                https://api.boardgameatlas.com/api/search?name=${action.payload}&limit=4&fuzzy_match=true&client_id=${apiKey}`
             )
 
         yield put({ type: 'SET_API_SEARCH', payload: response.data.games })

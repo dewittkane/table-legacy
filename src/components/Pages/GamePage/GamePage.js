@@ -25,7 +25,7 @@ class GamePage extends Component {
 
         <Grid container spacing={3}>
           {this.props.store.games.map(game => (
-            <Grid item xs={12} md={6} lg={4} key={game.gameInstance.game_instance_id}>
+            <Grid item xs={12} md={6} key={game.gameInstance.game_instance_id}>
               <GameInstanceCard game={game} />
             </Grid>
           ))}
