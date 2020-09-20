@@ -6,10 +6,14 @@ import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 
 class GameInstanceCard extends Component {
-
-  getDetails = () => {    
+  //lets me reuse instance card as a view only verify component
+  getDetails = () => {
+    if( this.props.viewOnly ) {
+    this.props.logGame()}
+    else {
     this.props.history.push(`/gameDetails/${this.props.game.gameInstance.game_instance_id}`)
-  }
+  }}
+
   render() {
     return (
           <Card style={{backgroundColor: "#ffffff"}}>
@@ -27,11 +31,8 @@ class GameInstanceCard extends Component {
                   <Grid item xs={8} style={{textAlign: "center"}}>
                     <List dense style={{padding: 0, columns: 2}}>
                       {this.props.game.players.map((player, i) => (
-                            <ListItem style={{padding: 0}}dense >
+                            <ListItem key={i} style={{padding: 0}}dense >
                               <ListItemText
-                                
-                                // style={player.is_winner ? {color: "gold", fontWeight: "bolder"} : {color: "black"}}
-                                key={i}
                                 primary={player.username ? player.username : player.players_name}
                                 secondary={(player.score && player.score + " points") + (player.is_winner === true ? " - Winner!" : '')}
                               />

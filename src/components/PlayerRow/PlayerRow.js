@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Checkbox, TableRow, TableCell, TextField, Typography } from '@material-ui/core';
+import { Checkbox, Grid, TableRow, TableCell, TextField, Typography } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import { withRouter } from 'react-router-dom';
 
@@ -23,8 +23,10 @@ class PlayerRow extends Component {
       <>
         {this.props.isEditMode ?
           <TableRow>
-            <TableCell>
-              <Delete onClick={this.removePlayer}/>
+            <TableCell padding="checkbox">
+              <Grid container justify="center" alignItems="center">
+                <Delete onClick={this.removePlayer}/>
+              </Grid>
             </TableCell>
             {/* will display username if they have one, other wise it will be just their name */}
             <TableCell>{this.props.player.username || this.props.player.players_name}</TableCell>
@@ -34,8 +36,12 @@ class PlayerRow extends Component {
                 onChange={(event) => this.props.dispatch({ type: 'EDIT_SCORE', payload: { index: this.props.index, score: event.target.value } })}
               />
             </TableCell>
-            <TableCell align="center">
-              <Checkbox onChange={this.toggleWin} checked={this.props.player.is_winner} />
+            <TableCell padding="checkbox" align="center">
+              <Checkbox 
+                onChange={this.toggleWin} 
+                checked={this.props.player.is_winner} 
+                color="default"
+              />
             </TableCell>
           </TableRow>
           :
@@ -56,7 +62,7 @@ class PlayerRow extends Component {
             <TableCell>
               <Typography>{this.props.player.score}</Typography>
             </TableCell>
-            <TableCell align="center">
+            <TableCell padding="checkbox" align="center">
               {this.props.player.is_winner && <img alt="victory icon!" src="./images/trophyIcon.svg"></img>}
             </TableCell>
           </TableRow>

@@ -26,7 +26,7 @@ class GameSearchModal extends Component {
         >
             <Container fixed>
                 <Grid container justify="center">
-                    <Typography variant="h4">Search the Board Game Atlas database:</Typography>
+                    <Typography style={{margin: "10px"}} variant="h4">Search the Board Game Atlas database:</Typography>
                     <Grid container justify="center">
                         <TextField
                             style={{margin: "20px"}}
@@ -34,11 +34,11 @@ class GameSearchModal extends Component {
                             variant='outlined'
                         />
                     </Grid>
-                    <Grid container spacing={2} justify="space-evenly">
+                    <Grid container spacing={2} style={{margin: "5px"}} justify="space-evenly">
                         {this.props.store.apiSearch && this.props.store.apiSearch.map(game => (
                             <Grid item key={game.id}>
-                                <Card style={{margin: "3px", padding:"5px", textAlign: "center"}}>
-                                    <CardActionArea onClick={() => this.handleChooseGame(game)}>
+                                <Card >
+                                    <CardActionArea style={{padding:"5px", textAlign: "center"}} onClick={() => this.handleChooseGame(game)}>
                                         <img src={game.images.small} alt={game.name}></img>
                                         <Typography display="block" variant="subtitle1">{game.name}</Typography>
                                     </CardActionArea>
@@ -47,7 +47,7 @@ class GameSearchModal extends Component {
                         ))}
                     </Grid>
                     <Button 
-                        style= {{margin: 10}}
+                        style={{border: "2px", borderColor: "#ef8354", borderStyle: "solid", margin: 10}}
                         variant='contained'
                         onClick={this.props.toggleApiSearchMode}
                         >Cancel

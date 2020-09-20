@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import AddAPlayerModal from '../AddAPlayerModal/AddAPlayerModal';
 import PlayerRow from '../PlayerRow/PlayerRow';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper } from '@material-ui/core';
+import { Button, Card, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper } from '@material-ui/core';
 
 // Basic class component structure for React with default state
 // value setup. When making a new component be sure to replace
@@ -25,19 +25,20 @@ class PlayerTable extends Component {
 
   render() {
     return (
-      <div>
-        <Typography variant="h4">Players:</Typography>
+      <div >
+        <Typography style={{margin: "10px"}} variant="h5">Player's Table:</Typography>
         <TableContainer component={Paper}>
             <Table size="small">
-                <TableHead>
-                    <TableRow>
+                <TableHead style={{backgroundColor: "#2d3142"}}>
+                    <TableRow >
                         {this.props.isEditMode && <TableCell></TableCell>}
-                        <TableCell>Player</TableCell>
-                        <TableCell>Score</TableCell>
-                        <TableCell>Win?</TableCell>
+                        <TableCell style={{color: "#e5e6e4"}}>Player</TableCell>
+                        <TableCell style={{color: "#e5e6e4"}}>Score</TableCell>
+                        <TableCell style={{color: "#e5e6e4"}}>Win?</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
+                    
                     {this.props.store.playersTable.map((player, i) => (
                         <PlayerRow key={i} isEditMode={this.props.isEditMode} index={i} player={player}/>
                     ))}
@@ -45,6 +46,8 @@ class PlayerTable extends Component {
                     <TableRow>
                         <TableCell colSpan={4} align="right">
                             <Button 
+                                size="small"
+                                style={{border: "2px", borderColor: "#ef8354", borderStyle: "solid"}}
                                 variant='contained'
                                 onClick={this.togglePlayerMode}>+ Add a Player
                             </Button>

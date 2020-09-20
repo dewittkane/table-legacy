@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Container, Dialog, Grid, Paper, TextField } from '@material-ui/core';
+import { Button, Card, CardActionArea, Container, Dialog, Grid, TextField, Typography } from '@material-ui/core';
 
 class AddAPlayerModal extends Component {
   state = {
@@ -55,38 +55,49 @@ class AddAPlayerModal extends Component {
             onClose={this.props.togglePlayerMode}
         >
             <Container>
-
-                <h3>Search for your friend if they have an account:</h3>
+              <Grid container justify="center">
+                <Typography style={{margin: "10px"}} variant="h4">Search for your friends:</Typography>
                 <TextField
+                    style={{margin: "20px"}}
                     onChange={this.searchUser}
                     variant='outlined'
                 />
-                <div>
-                {this.props.store.userSearch && this.props.store.userSearch.map(user => (
-                  <Button style={{margin: "5px"}} variant='contained' key={user.id} onClick={() => this.handleAddUser(user)}>{user.username}</Button>
-                ))}
-                </div>
+                <Grid container justify="space-evenly" spacing={1}>
+                  {this.props.store.userSearch && this.props.store.userSearch.map(user => (
+                    <Grid item key={user.id}>
+                      <Card >
+                          <CardActionArea style={{border: "2px", borderColor: "#ef8354", borderStyle: "solid", padding: "5px"}} onClick={() => this.handleAddUser(user)}>
+                              <Typography display="block" variant="subtitle1">{user.username}</Typography>
+                          </CardActionArea>
+                      </Card>
+                    </Grid>  
+                  ))}
+                </Grid>
 
-                <h5>Friend doesn't have an account? Add them with their name here!</h5>
-                <TextField
-                    onChange={this.handlePlayerNameChange} 
-                    value={this.state.player.players_name}
-                    variant='outlined'
-                />
+                <Typography style={{margin: "10px"}} variant="h6">No account? Type their name here!</Typography>
                 <Grid container justify="center">
+                  <TextField
+                      style={{margin: "10px"}}
+                      onChange={this.handlePlayerNameChange} 
+                      value={this.state.player.players_name}
+                      variant='outlined'
+                  />
+                </Grid>
+                <Grid container justify="center" style={{margin: "10px"}}>
                   <Button
-                      style={{margin: "20px"}}
+                      style={{border: "2px", borderColor: "#ef8354", borderStyle: "solid", margin: 10}}
                       variant='contained'
                       onClick={this.handleAddPlayer}
                       >Add Player
                   </Button>
                   <Button 
-                      style={{margin: "20px"}}
+                      style={{border: "2px", borderColor: "#ef8354", borderStyle: "solid", margin: 10}}
                       variant='contained'
                       onClick={this.props.togglePlayerMode}
                       >Cancel
                   </Button>
                 </Grid>
+              </Grid>
             </Container>
         </Dialog>
     );

@@ -63,8 +63,8 @@ class GameSelectModal extends Component {
                             <Grid container spacing={2} justify="space-evenly">
                                 {this.props.store.gameSearch && this.props.store.gameSearch.map(game => (
                                     <Grid key={game.id} item>
-                                        <Card style={{margin: "3px", padding:"5px", textAlign: "center"}}>
-                                            <CardActionArea onClick={() => this.handleChooseGame(game)}>
+                                        <Card>
+                                            <CardActionArea style={{padding:"5px", textAlign: "center"}} onClick={() => this.handleChooseGame(game)}>
                                                 <img src={game.image_url} alt={game.name} component="img"></img>
                                                 <Typography display="block" variant="subtitle1">{game.name}</Typography>
                                             </CardActionArea>
@@ -75,13 +75,13 @@ class GameSelectModal extends Component {
 
                             <Typography variant="h5">Not finding the right game? Trying adding it to our list with the Board Game Atlas!</Typography>
                             <Button 
-                                style= {{margin: 10}}
+                                style={{border: "2px", borderColor: "#ef8354", borderStyle: "solid", margin: 10}}
                                 variant='contained'
                                 onClick={this.openSearchMode}>
-                                Search Board Game Atlas!
+                                Search Board Game Atlas
                             </Button>
                             <Button
-                                style= {{margin: 10}}
+                                style={{border: "2px", borderColor: "#ef8354", borderStyle: "solid", margin: 10}}
                                 variant='contained'
                                 onClick={this.props.toggleGameSelectMode}
                                 >Cancel
