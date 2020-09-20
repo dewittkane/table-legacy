@@ -4,11 +4,11 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import { Button, Card, CardActionArea, Container, Grid, Dialog, Paper, TextField, Typography } from '@material-ui/core';
 
 class GameSearchModal extends Component {
+  //adds the game to the database and sets it to the log a game reducer.  closes the modal
   handleChooseGame = (game) => {
     console.log('Choosing this game:', game);
     this.props.dispatch({ type: 'ADD_GAME_TO_DB', payload: game})
     this.props.toggleApiSearchMode();
-    this.props.toggleGameSelectMode();
     }
 
   searchApi = (event) => {
@@ -19,34 +19,40 @@ class GameSearchModal extends Component {
   render() {
     return (
         <Dialog
+            maxWidth="md"
+            disableScrollLock={true}
             open={this.props.apiSearchMode}
             onClose={this.props.toggleApiSearchMode}
         >
             <Container fixed>
-                <Typography variant="h4">Search the Board Game Atlas database:</Typography>
-                <TextField
-                    style={{margin: "20px"}}
-                    onChange={this.searchApi}
-                    variant='outlined'
-                />
-                <Grid container spacing={2}>
-                    {this.props.store.apiSearch && this.props.store.apiSearch.map(game => (
-                        <Grid item key={game.id}>
-                            <Card >
-                                <CardActionArea onClick={() => this.handleChooseGame(game)}>
-                                    <img src={game.images.small} alt={game.name}></img>
-                                    <Typography variant="subtitle1">{game.name}</Typography>
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                        
-                    ))}
+                <Grid container justify="center">
+                    <Typography variant="h4">Search the Board Game Atlas database:</Typography>
+                    <Grid container justify="center">
+                        <TextField
+                            style={{margin: "20px"}}
+                            onChange={this.searchApi}
+                            variant='outlined'
+                        />
+                    </Grid>
+                    <Grid container spacing={2} justify="space-evenly">
+                        {this.props.store.apiSearch && this.props.store.apiSearch.map(game => (
+                            <Grid item key={game.id}>
+                                <Card style={{margin: "3px", padding:"5px", textAlign: "center"}}>
+                                    <CardActionArea onClick={() => this.handleChooseGame(game)}>
+                                        <img src={game.images.small} alt={game.name}></img>
+                                        <Typography display="block" variant="subtitle1">{game.name}</Typography>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>      
+                        ))}
+                    </Grid>
+                    <Button 
+                        style= {{margin: 10}}
+                        variant='contained'
+                        onClick={this.props.toggleApiSearchMode}
+                        >Cancel
+                    </Button>
                 </Grid>
-                <Button 
-                    variant='contained'
-                    onClick={this.props.toggleApiSearchMode}
-                    >Cancel
-                </Button>
             </Container>
         </Dialog>
     );

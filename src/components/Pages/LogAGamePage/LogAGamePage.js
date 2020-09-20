@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
-import { Button, Container, Grid, TextField, Typography, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, Card, CardActionArea, Container, Grid, TextField, Typography, Paper } from '@material-ui/core';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import PlayerTable from '../../PlayerTable/PlayerTable';
@@ -10,20 +9,6 @@ import GameSelectModal from '../../GameSelectModal/GameSelectModal';
 // import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 
-const useStyles = makeStyles((theme) => ({
-
-  paper: {
-      maxHeight: "80%",
-      maxWidth: "90%",
-      margin: 'auto',
-      padding: 13,
-  }
-}));
-// classes = useStyles();
-
-// function MyNoteDetails(props) {
-//   const classes = useStyles();
-// }
 
 class LogAGamePage extends Component {
   //toggles the game select Modal
@@ -78,69 +63,71 @@ class LogAGamePage extends Component {
     return (
       <Container fixed>
         <Paper style={{maxHeight: "80%",
-      maxWidth: "60%",
+      maxWidth: "80%",
       margin: 'auto',
       padding: "13px" }}>
-          <Container fixed>
-        <Typography variant="h2">Log a Game</Typography>
+          <Container fixed justify="center" >
+            <Typography style={{color: "#ef8354"}} variant="h3">Log a Game</Typography>
 
-        <Grid container spacing={3} justify="space-evenly" alignItems="flex-end">
-          {this.props.store.logAGame.name ?
-          <Grid item xs={4} align="center">
-            <img src={this.props.store.logAGame.image_url} alt={this.props.store.logAGame.name}/>
-            <Typography variant="h4">{this.props.store.logAGame.name}</Typography>
-            <Button
-              onClick={this.toggleGameSelectMode}
-              variant='contained'>
-              Choose a different game
+            <Grid container spacing={3} justify="space-evenly" alignItems="center">
+              {this.props.store.logAGame.name ?
+              <Grid item xs={4} align="center">
+                <div style={{height: "20px", width: "50px"}}></div>
+                <img src={this.props.store.logAGame.image_url} alt={this.props.store.logAGame.name}/>
+                <Typography variant="h4">{this.props.store.logAGame.name}</Typography>
+                <Card variant="outlined"  style={{border: "1px", borderColor: "#ef8354", borderStyle: "solid"}}>
+                  <CardActionArea onClick={this.toggleGameSelectMode}>
+                    <Typography variant="subtitle2">Choose a Different Game?</Typography>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+              :
+
+              <Grid item xs={4} align="center">
+                <div style={{height: "100px", width: "50px"}}></div>
+                <Card variant="outlined"  style={{border: "3px", borderColor: "#ef8354", borderStyle: "solid"}}>
+                  <CardActionArea onClick={this.toggleGameSelectMode}>
+                    <Typography variant="h5">Choose a Game</Typography>
+                  </CardActionArea>
+                </Card>
+                <div style={{height: "100px", width: "50px"}}></div>
+              </Grid>
+              }
+
+              <GameSelectModal gameSelectMode={this.state.gameSelectMode} toggleGameSelectMode={this.toggleGameSelectMode}/>
+              <Grid item xs={4} align="center">
+                <TextField 
+                  style={{width: "250px"}}
+                  multiline
+                  value={this.props.store.logAGame.creator_notes}
+                  onChange={(event) => this.props.dispatch({type: 'SET_NOTE', payload: event.target.value})}
+                  rows={4}
+                  variant='outlined'
+                  placeholder='Notes?'
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <DatePicker 
+                    autoOk
+                    disableFuture
+                    disableToolbar
+                    value={this.props.store.logAGame.date_played}
+                    onChange={(date) => this.props.dispatch({type: 'SET_DATE', payload: date})}
+                    label='Date Played'
+                    format='dddd, L'
+                    variant="dialog"
+                    inputVariant="outlined"
+                  />
+                </MuiPickersUtilsProvider>
+              </Grid>
+            </Grid>
+            <PlayerTable isEditMode={true}/>
+            <Button 
+              variant='contained'
+              onClick={this.logGame}>
+              Log your Legacy
             </Button>
-          </Grid>
-          :
-
-          <Grid item xs={4} align="center" justify="flex-end">
-            <div style={{height: "250px", width: "50px"}}></div>
-            <Button
-              onClick={this.toggleGameSelectMode}
-              variant='contained'>
-              Choose a game!
-            </Button>
-          </Grid>
-
-          }
-
-          <GameSelectModal gameSelectMode={this.state.gameSelectMode} toggleGameSelectMode={this.toggleGameSelectMode}/>
-          <Grid item xs={4} align="center">
-            <TextField 
-              multiline
-              value={this.props.store.logAGame.creator_notes}
-              onChange={(event) => this.props.dispatch({type: 'SET_NOTE', payload: event.target.value})}
-              rows={4}
-              variant='filled'
-              label='Notes?'
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <DatePicker 
-                autoOk
-                disableFuture
-                disableToolbar
-                value={this.props.store.logAGame.date_played}
-                onChange={(date) => this.props.dispatch({type: 'SET_DATE', payload: date})}
-                label='Date Played'
-                format='dddd, L'
-                variant="dialog"
-                inputVariant="outlined"
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
-        </Grid>
-        <PlayerTable isEditMode={true}/>
-        <Button 
-          variant='contained'
-          onClick={this.logGame}>
-          Log your Legacy
-        </Button>
           </Container>
         </Paper>
       </Container>

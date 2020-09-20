@@ -7,20 +7,11 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import { Button, Typography } from '@material-ui/core';
 
 const Nav = (props) => {
-  let loginLinkData = {
-    path: '/login',
-    text: 'Login / Register',
-  };
 
-  if (props.store.user.id != null) {
-    loginLinkData.path = '/home';
-    loginLinkData.text = 'Home';
-  }
 
 
   return (
     <div className="nav">
-      {props.match.url === '/home' && <h2 className="nav-link" onClick={props.history.goBack}>Back</h2>}
       <Link to="/home">
         <Typography variant="h2" className="nav-title">Table Legacy</Typography>
       </Link>

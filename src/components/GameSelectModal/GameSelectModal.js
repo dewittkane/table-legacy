@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Card, CardActionArea, CardHeader, CardMedia, Container, Dialog, Grid, MakeStyle, Modal, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, Card, CardActionArea, Container, Dialog, Grid, TextField, Typography } from '@material-ui/core';
 import GameSearchModal from '../GameSearchModal/GameSearchModal';
-import './GameSelectModal.css'
-
-// const useStyles = makeStyles({
-//     MUIButton: {
-//         margin: "10"
-//     }
-// })
 
 class GameSelectModal extends Component {
-    // classes = useStyles()
     //starting state for API search modal is off
     state = {
         apiSearchMode: false
@@ -27,7 +19,7 @@ class GameSelectModal extends Component {
 
     //sends request to find games matching search string
     searchGame = (event) => {
-        this.props.dispatch({ type: 'SEARCH_GAME', payload: event.target.value })
+        this.props.dispatch({ type: 'SEARCH_GAME', payload: event.target.value})
     };
 
     //changes state to show the API search modal
@@ -36,6 +28,12 @@ class GameSelectModal extends Component {
             apiSearchMode: !this.state.apiSearchMode
         });
     };
+
+    //prevents double modals from opening
+    openSearchMode = () => {
+        this.props.toggleGameSelectMode();
+        this.toggleApiSearchMode();
+    }
 
     render() {
         return (
@@ -47,6 +45,7 @@ class GameSelectModal extends Component {
                     apiSearchMode={this.state.apiSearchMode}
                 />
                 <Dialog
+                    maxWidth="md"
                     disableScrollLock={true}
                     open={this.props.gameSelectMode}
                     onClose={this.props.toggleGameSelectMode}
@@ -54,16 +53,17 @@ class GameSelectModal extends Component {
                     <Container fixed>
                         <Grid container justify="center">
                             <Typography variant="h4">Search for your favorite game:</Typography>
+                            <Grid container justify="center">
                             <TextField
-                                style={{ margin: "20px"}}
+                                style={{margin: "20px"}}
                                 onChange={this.searchGame}
                                 variant='outlined'
                             />
-                            {/* Convert to gridlist */}
-                            <Grid container spacing={2}>
+                            </Grid>
+                            <Grid container spacing={2} justify="space-evenly">
                                 {this.props.store.gameSearch && this.props.store.gameSearch.map(game => (
-                                    <Grid key={game.id} item alignItems="center">
-                                        <Card >
+                                    <Grid key={game.id} item>
+                                        <Card style={{margin: "3px", padding:"5px", textAlign: "center"}}>
                                             <CardActionArea onClick={() => this.handleChooseGame(game)}>
                                                 <img src={game.image_url} alt={game.name} component="img"></img>
                                                 <Typography display="block" variant="subtitle1">{game.name}</Typography>
@@ -76,14 +76,12 @@ class GameSelectModal extends Component {
                             <Typography variant="h5">Not finding the right game? Trying adding it to our list with the Board Game Atlas!</Typography>
                             <Button 
                                 style= {{margin: 10}}
-                                className="MUIButton"
                                 variant='contained'
-                                onClick={this.toggleApiSearchMode}>
+                                onClick={this.openSearchMode}>
                                 Search Board Game Atlas!
                             </Button>
                             <Button
                                 style= {{margin: 10}}
-                                className="MUIButton"
                                 variant='contained'
                                 onClick={this.props.toggleGameSelectMode}
                                 >Cancel

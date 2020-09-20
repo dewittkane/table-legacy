@@ -21,7 +21,6 @@ import GameInstancePage from '../Pages/GameInstancePage/GameInstancePage';
 import UserPage from '../Pages/UserPage/UserPage';
 import GamePage from '../Pages/GamePage/GamePage';
 
-import makeStyles from '@material-ui/core';
 import './App.css';
 
 
@@ -36,18 +35,18 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div style={{backgroundColor: "#e5e6e4"}}>
+        <div>
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
             <Redirect exact from="/" to="/home" />
 
             {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
+            Visiting localhost:3000/home will show the Homepage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
+            Even though it seems like they are different pages, the user is always on localhost:3000/home */}
             <ProtectedRoute
-              // logged in shows UserPage else shows LoginPage
+              // logged in shows HomePage else shows LoginPage
               exact
               path="/home"
               component={HomePage}

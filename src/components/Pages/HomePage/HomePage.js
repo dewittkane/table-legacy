@@ -19,25 +19,25 @@ class HomePage extends Component {
         <Grid 
           container 
           spacing={3}
-          justify="space-between"
           alignItems="center"
         >
           <Grid item xs={6}>
-            <Typography style={{color: "#ef8354", fontWeight: "bold"}}variant="h2">Welcome, {this.props.store.user.username}!</Typography>
+            <Typography style={{color: "#ef8354"}}variant="h2">Welcome, {this.props.store.user.username}!</Typography>
           </Grid>
     
           <Grid item xs={6}>
-            <Card>
+            <Card variant="outlined"  style={{border: "3px", borderColor: "#ef8354", borderStyle: "solid"}}>
               <CardActionArea onClick={() => this.props.history.push('/loggame') }>
                 <CardHeader
+                alignItems="center"
                   title="Log a Game"
                   subheader="Click me!"
-                  action={<Add fontSize='large'/>}
+                  action={<Add style={{color: "#ef8354", height: "75px", width: "75px"}}fontSize='large'/>}
                 />
               </CardActionArea>
             </Card>
           </Grid>
-          <Grid container spacing={3}> 
+          {/* <Grid container spacing={3}>  */}
             {/* maps through all of your games and shows details for each one */}
             {this.props.store.games.map(game => (
               <Grid item xs={12} md={6} key={game.gameInstance.game_instance_id}>
@@ -45,7 +45,7 @@ class HomePage extends Component {
               </Grid>
             ))}
           </Grid>
-        </Grid>
+        {/* </Grid> */}
       </Container>
     );
   }

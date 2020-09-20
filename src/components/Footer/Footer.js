@@ -6,6 +6,6 @@ import './Footer.css';
 // It doesn't dispatch any redux actions or display any part of redux state
 // or even care what the redux state is, so it doesn't need 'connect()'
 
-const Footer = () => <footer>&copy; 2020 - Table Legacy // dewitt.ka</footer>;
+const Footer = () => <footer>Table Legacy 2020 - <a href="https://github.com/dewittkane">github.com/dewittkane</a></footer>;
 
 export default Footer;
