@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom'
 import GameInstanceCard from '../../GameInstanceCard/GameInstanceCard';
-import { Card, CardActionArea, CardHeader, Container, Grid, IconButton, Typography } from '@material-ui/core';
+import { Card, CardActionArea, CardHeader, Container, Grid, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 
 class HomePage extends Component {

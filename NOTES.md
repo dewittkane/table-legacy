@@ -18,7 +18,7 @@
 [x] - fix games table to be unique
 [x] - fix add game to db button
 [x] - log a game select a date issue
-[] - delete swal
-[] - make links on game instance FEEL like links/ Make sidebar instead??
+[x] - delete swal
+[???] - make links on game instance FEEL like links/ Make sidebar instead??
 [xxx] - back button not on home page
 [xxx] - tidy up reducers

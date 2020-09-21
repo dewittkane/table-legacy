@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../../redux/mapStoreToProps';
 import { withRouter } from 'react-router-dom'
 import GameInstanceCard from '../../GameInstanceCard/GameInstanceCard';
-import { Grid } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 
 class UserPage extends Component {
 
@@ -19,25 +19,27 @@ class UserPage extends Component {
 
   render() {
     return (
-      <Grid 
-        container 
-        spacing={3}
-        justify="space-between"
-        alignItems="center"
-      >
-        <Grid item xs={12}>
-            <h5>Games you've played with</h5>
-            <h1>{this.props.store.focusedUser.username}</h1>
-        </Grid>
+      <Container fixed>
+        <Grid 
+          container 
+          spacing={3}
+          justify="space-between"
+          alignItems="center"
+        >
+          <Grid item xs={12}>
+              <Typography variant="subtitle1">Games you've played with</Typography>
+              <Typography style={{color: "#ef8354"}} variant="h2">{this.props.store.focusedUser.username}</Typography>
+          </Grid>
 
-        <Grid container spacing={3}>
-          {this.props.store.games.map(game => (
-            <Grid item xs={12} md={6} key={game.gameInstance.game_instance_id}>
-              <GameInstanceCard game={game} />
-            </Grid>
-          ))}
+          <Grid container spacing={3}>
+            {this.props.store.games.map(game => (
+              <Grid item xs={12} md={6} key={game.gameInstance.game_instance_id}>
+                <GameInstanceCard game={game} />
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     );
   }
 }
