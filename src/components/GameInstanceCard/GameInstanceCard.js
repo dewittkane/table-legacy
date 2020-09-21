@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Card, CardActionArea, CardHeader, CardContent, CardMedia, List, ListItem, ListItemIcon, ListItemText, Typography, Grid } from '@material-ui/core';
+import { Card, CardActionArea, CardHeader, CardContent, List, ListItem, ListItemText, Grid } from '@material-ui/core';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 

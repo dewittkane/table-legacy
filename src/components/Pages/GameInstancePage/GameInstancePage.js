@@ -72,7 +72,7 @@ class GameInstancePage extends Component {
         
         ?  
         <>
-            <Typography style={{margin: "20px"}} variant="h2">Edit Game</Typography>
+            <Typography style={{margin: "20px", color: "#ef8354"}} variant="h2">Edit Game</Typography>
 
             <Grid container spacing={3} justify="space-evenly" alignItems="center">
                 <Grid item xs={4} align="center">
@@ -141,15 +141,16 @@ class GameInstancePage extends Component {
         <>
             <Grid container spacing={3} style={{margin: "8px"}}>
                 <Grid style={{padding: "5px"}}item xs={12}>
+                    <Typography variant="h5">{moment(this.props.store.gameInstance.gameInstance.date_played).format("MMM D, YYYY")}</Typography>
                     <Typography 
+                        style={{color: "#ef8354"}}
                         onClick={() => this.props.history.push(`/game/${this.props.store.gameInstance.gameInstance.game_id}`)}
                         variant="h2"
                         >{this.props.store.gameInstance.gameInstance.name}
                     </Typography>
 
-                    <Typography variant="h5">&nbsp;{moment(this.props.store.gameInstance.gameInstance.date_played).format("MMM D, YYYY")}</Typography>
                     <Link 
-                        style={{marginLeft: "7px", color:"#ef8354"}}
+                        style={{marginLeft: "7px", color:"#000000"}}
                         variant="caption"
                         href={this.props.store.gameInstance.gameInstance.url}
                         rel="noopener"

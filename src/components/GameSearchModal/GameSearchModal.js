@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { Button, Card, CardActionArea, Container, Grid, Dialog, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, Card, CardActionArea, Container, Grid, Dialog, TextField, Typography } from '@material-ui/core';
 
 class GameSearchModal extends Component {
   //adds the game to the database and sets it to the log a game reducer.  closes the modal

@@ -77,7 +77,7 @@ class LogAGamePage extends Component {
             padding: "13px" 
           }}>
           <Container fixed justify="center" >
-            <Typography style={{margin: "20px"}} variant="h2">Log a Game</Typography>
+            <Typography style={{marginTop: "20px", color: "#ef8354"}} variant="h2">Log a Game</Typography>
 
             <Grid container spacing={3} justify="space-evenly" alignItems="center">
               {this.props.store.logAGame.name
@@ -99,7 +99,7 @@ class LogAGamePage extends Component {
 
               <Grid item xs={4} align="center">
                 <div style={{height: "100px", width: "50px"}}></div>
-                <Card variant="outlined"  style={{border: "3px", borderColor: "#ef8354", borderStyle: "solid"}}>
+                <Card variant="outlined"  style={{border: "2px", borderColor: "#ef8354", borderStyle: "solid"}}>
                   <CardActionArea onClick={this.toggleGameSelectMode}>
                     <Typography style={{padding: "10px"}}variant="h5">Choose a Game</Typography>
                   </CardActionArea>
