@@ -29,7 +29,7 @@ class HomePage extends Component {
             <Card variant="outlined"  style={{border: "3px", borderColor: "#ef8354", borderStyle: "solid"}}>
               <CardActionArea onClick={() => this.props.history.push('/loggame') }>
                 <CardHeader
-                alignItems="center"
+                  align="center"
                   title="Log a Game"
                   subheader="Click me!"
                   action={<Add style={{color: "#ef8354", height: "75px", width: "75px"}}fontSize='large'/>}

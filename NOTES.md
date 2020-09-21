@@ -1,4 +1,4 @@
-[] - Add Modal Confirmation to Log a Game Page 
+[x] - Add Modal Confirmation to Log a Game Page 
 [xxx] - Paginate search results
 [x] - Delete row button from Log a Game Page
 [xxx] - security, only view game instance page if you are a participant
@@ -19,6 +19,6 @@
 [x] - fix add game to db button
 [x] - log a game select a date issue
 [] - delete swal
-[] - make links on game instance FEEL like links
+[] - make links on game instance FEEL like links/ Make sidebar instead??
 [xxx] - back button not on home page
 [xxx] - tidy up reducers

@@ -71,8 +71,8 @@ class LogAGamePage extends Component {
   render() {
     return (
         <Paper style={{
-            maxHeight: "80%",
-            maxWidth: "80%",
+            maxHeight: "90%",
+            maxWidth: "65%",
             margin: 'auto',
             padding: "13px" 
           }}>
@@ -80,7 +80,10 @@ class LogAGamePage extends Component {
             <Typography style={{margin: "20px"}} variant="h2">Log a Game</Typography>
 
             <Grid container spacing={3} justify="space-evenly" alignItems="center">
-              {this.props.store.logAGame.name ?
+              {this.props.store.logAGame.name
+
+              ?
+
               <Grid item xs={4} align="center">
                 <div style={{height: "20px", width: "50px"}}></div>
                 <img src={this.props.store.logAGame.image_url} alt={this.props.store.logAGame.name}/>
@@ -91,6 +94,7 @@ class LogAGamePage extends Component {
                   </CardActionArea>
                 </Card>
               </Grid>
+              
               :
 
               <Grid item xs={4} align="center">
@@ -133,9 +137,11 @@ class LogAGamePage extends Component {
                 </MuiPickersUtilsProvider>
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
-            <PlayerTable isEditMode={true}/>
-            </Grid>
+              <Grid item xs={1}></Grid>
+              <Grid item xs={10}>
+                <PlayerTable isEditMode={true}/>
+              </Grid>
+              <Grid item xs={1}></Grid>
             <Button 
               size="large"
               style={{border: "2px", borderColor: "#ef8354", borderStyle: "solid", margin: "10px", marginBottom:"30px"}}
@@ -152,7 +158,7 @@ class LogAGamePage extends Component {
             <Container fixed >
               <Grid container spacing={2} justify="center" >
                 <Grid item xs={12} align="center">
-                  <Typography style={{margin: "10px"}} variant="h4">Look correct? Click to confirm!</Typography>
+                  <Typography style={{margin: "10px"}} variant="h4">Everything look okay? Click to confirm!</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <GameInstanceCard 
