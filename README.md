@@ -3,7 +3,9 @@ _Project Duration: 2 Week Sprint_
 
 Table Legacy is a web app built to keep track of board game play history with your friends.  You can record the game played, who you played with, the scores, and the winner.  
 
-Table Legacy makes it easy to keep track of your favorite games and helps you remind your friends who's better at Catan :smirk:.
+Table Legacy makes it easy to keep track of your favorite games and helps you remind your friends who's better at Catan :smirk:
+
+Deployed at https://tablelegacy.herokuapp.com/
 
 ## Screenshots
 
