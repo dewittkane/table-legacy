@@ -8,6 +8,7 @@ Table Legacy makes it easy to keep track of your favorite games and helps you re
 ## Screenshots
 
 ![Home Page](public/images/readmeImage1.png)
+
 ![Game Detail Page](public/images/readmeImage2.png)
 
 ## Getting Started
