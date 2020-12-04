@@ -5,11 +5,6 @@ import AddAPlayerModal from '../AddAPlayerModal/AddAPlayerModal';
 import PlayerRow from '../PlayerRow/PlayerRow';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper } from '@material-ui/core';
 
-// Basic class component structure for React with default state
-// value setup. When making a new component be sure to replace
-// the component name PlayerTable with the name for the new
-// component.
-
 
 class PlayerTable extends Component {
   state = {

@@ -62,6 +62,8 @@ router.get('/myGames', rejectUnauthenticated, async (req, res) => {
         client.release()
     }
   });
+
+
 // gets the game instances that both the logged in user and selected user have played
 router.get('/myGamesAgainst/:id', rejectUnauthenticated, async (req, res) => {
     const client = await pool.connect();
@@ -179,6 +181,8 @@ router.get('/myGamesOf/:gameId', rejectUnauthenticated, async (req, res) => {
         client.release()
     }
   });
+
+  
 // gets the selected game instance
 router.get('/gameInstance/:gameInstanceId', rejectUnauthenticated, (req, res) => {
     const queryText = `SELECT * FROM "game" 
